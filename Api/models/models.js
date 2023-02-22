@@ -23,6 +23,9 @@ const schemaJugador = new Schema ({
     victoriasEspeciales: {type:Number},
     ataqueSolitario: {type:Number},
     defensaSolitaria: {type:Number},
+    foto: {type: String},
+    cumpleaños:{type:Date},
+    biografia:{type: String},
     partidasDeCopa:[{
         type: Number,
         validate: [arrayLimit, 'El número máximo de partidas permitido es 10']
@@ -38,6 +41,23 @@ const schemaJugador = new Schema ({
   }],
 })
 
+const schemaPartida = new Schema({
+fecha: {type: Date},
+jugadoresPresentes: { type: mongoose.Schema.Types.ObjectId,
+  ref: 'jugadores'},
+jugadoresPosiciones: {type: Number},
+campaña: {type:Boolean},
+
+
+})
+
+const schemaAdmin = new Schema({
+  nombre: {type: String},
+  contraseña: {type: String},
+  totalPublicaciones:{type: Number},
+  rangoactual:{type: Number}
+
+})
 
 const schemaCopa = new Schema({
  nombre:{type:String, required: true},
@@ -56,5 +76,7 @@ cantidadPartidas:{
 
 const Jugador = mongoose.model('jugadores', schemaJugador);
 const Copa = mongoose.model('copa', schemaCopa);
+const Admin = mongoose.model('admin',schemaAdmin);
+const Partida = mongoose.model('partida', schemaPartida)
 
-module.exports =  {Jugador, Copa}
+module.exports =  {Jugador, Copa, Admin, Partida}
