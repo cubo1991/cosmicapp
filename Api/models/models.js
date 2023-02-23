@@ -1,12 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
-function arrayLimit(val) {
-  return val.length <= 10;
-}
-function maxPartidas(val) {
-  return val <= 10
-}
+
 
 
 const schemaJugador = new Schema ({
@@ -28,7 +23,7 @@ const schemaJugador = new Schema ({
     biografia:{type: String},
     partidasDeCopa:[{
         type: Number,
-        validate: [arrayLimit, 'El número máximo de partidas permitido es 10']
+        
     }],
     copasJugadas:[{
       copa: {
@@ -36,16 +31,22 @@ const schemaJugador = new Schema ({
         ref: 'copa'
       },
       puntos: [{
-        type:{ type:Number, required: true}       
+         type:Number, required: true      
       }]
   }],
 })
 
 const schemaPartida = new Schema({
 fecha: {type: Date},
-jugadoresPresentes: { type: mongoose.Schema.Types.ObjectId,
-  ref: 'jugadores'},
-jugadoresPosiciones: {type: Number},
+jugadoresPresentes: [{
+  jugador: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'jugadores'
+  },
+  posicion: {
+    type: Number
+  }
+}],
 campaña: {type:Boolean},
 
 

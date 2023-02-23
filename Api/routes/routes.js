@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {Jugador, Copa} = require('../models/models.js')
+const {Jugador, Copa, Partida} = require('../models/models.js')
 
 
 
@@ -32,6 +32,16 @@ router.get('/ranking', async (req, res, next) => {
 
 })
 
+router.get('/:idCopa', async (req, res, next) => {
+  const {idCopa} = req.params
+  console.log(idCopa)
+
+  const copa = await Copa.findById(idCopa)
+
+  res.json(copa)    
+   
+
+})
 
 router.get('/:id', async (req, res, next) => {
 
@@ -77,12 +87,54 @@ res.json({status: "Jugadores agregados"})
 
 })
 
+router.post('/partida', async (req, res) => {
+  const { fecha, jugadoresPresentes, campaña } = req.body;
+console.log(fecha)
+  try {
+    // Creamos la nueva partida
+    const nuevaPartida = new Partida({ fecha, jugadoresPresentes, campaña });
+
+    // Guardamos la partida en la base de datos
+    const partidaGuardada = await nuevaPartida.save();
+
+    // Respondemos con la partida creada
+    res.json(partidaGuardada);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
 
  
 // PUT
 
 
-// ESTO NO FUNCIONA TENGO QUE ARREGLARLO
+router.put('/:idPartida', async (req, res) => {
+  const { idPartida } = req.params;
+  const { jugadoresPresentes } = req.body;
+
+  try {
+    const partida = await Partida.findById(idPartida);
+
+    if (!partida) {
+      return res.status(404).json({ error: 'Partida no encontrada' });
+    }
+
+    partida.jugadoresPresentes = jugadoresPresentes.map((jp) => {
+      return {
+        jugador: jp.jugador,
+        posicion: jp.posicion
+      }
+    });
+
+    await partida.save();
+
+    res.json(partida);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
  
 router.put("/copa/:id/agregarJugador", async (req, res) => {
   const {jugadoresId} = req.body
@@ -126,32 +178,36 @@ router.put("/copa/:id/agregarJugador", async (req, res) => {
      }
    });
 
+   // ESTO NO FUNCIONA TENGO QUE ARREGLARLO
 
-router.put('/:idCup/:idPlayer', async (req, res) => {
-  const {idCup, idPlayer} = req.params;
-  const {points} = req.body;
-  try {
-    const cup = await Copa.findById(idCup);
-    const player = await Jugador.findById(idPlayer);
-
-
-
-    const playerInCup = cup.jugadores.find(j => j._id.toString() === idPlayer);
-    const index = cup.jugadores.indexOf(playerInCup);
-
-console.log(playerInCup, index)
-
-    const copaJugada = player.copasJugadas.find(c => c.copa.toString() === idCup);
-    copaJugada.puntos.push({type: points});
-
-    const updatedCup = await cup.save();
-    const updatedPlayer = await player.save();
-
-    res.json({"message":"Funciona"});
-  } catch (error) {
-    res.status(400).json({message: error.message});
-  }
-});
+   router.put('/:idCopa/:idJugador', async (req, res) => {
+    const { idJugador, idCopa } = req.params;
+    const { puntos } = req.body;
+    console.log(puntos)
+  
+    try {
+      const jugador = await Jugador.findById(idJugador);
+  
+      if (!jugador) {
+        return res.status(404).json({ error: 'Jugador no encontrado' });
+      }
+  
+      const copa = jugador.copasJugadas.find((c) => c.copa.equals(idCopa));
+  
+      if (!copa) {
+        return res.status(404).json({ error: 'Copa no encontrada para este jugador' });
+      }
+  
+      copa.puntos.push(puntos);
+  
+      await jugador.save();
+  
+      res.json(jugador);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error del servidor' });
+    }
+  });
 
 
 
