@@ -25,7 +25,7 @@ app.use('/api',require('./routes/routes.js'))
 
 //Static Files
 app.use(express.static(path.join(__dirname,'../Client/public'))) 
-console.log(public)
+console.log(path.join(__dirname,'../Client/public'))
 
 //Starting the server
 app.listen(3000, () => {
