@@ -4,12 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'jquery/dist/jquery.min.js'
 import 'bootstrap/dist/js/bootstrap.min.js'
-import { NavBar } from './Components/NavBar';
+import { Home } from './Components/Home/Home';
+
 
 function App() {
   return (
     <div className="App">
-      <NavBar/>
+      <Home/>
       
     </div>
   );
