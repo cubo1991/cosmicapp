@@ -35,6 +35,9 @@ export const NavBar = () => {
             <li className="nav-item">
               <a className="nav-link" href="# ">Boletín Cósmico</a>
             </li>
+            <li className="nav-item">
+              <a className="nav-link" href="# ">Administrador</a>
+            </li>
           </ul>
         </div>
       </div>
