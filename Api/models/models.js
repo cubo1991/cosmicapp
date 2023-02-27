@@ -10,7 +10,7 @@ const schemaJugador = new Schema ({
     puntos:{type: Number, default: 0},
     copas:{type: Number, default: 0},
     campañas:{type: Number, default: 0},
-    ranking:{type: Number, default: 1, required: true},
+    ranking:{type: Number, default: 1},
     partidas:{type:Number},
     puntosPartidas:[Number],
     colonias:{type:Number},
@@ -30,6 +30,11 @@ const schemaJugador = new Schema ({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'copa'
       },
+      partidas: [{
+        coloniasExternas: {type:Number},
+        coloniasInternas: {type:Number},
+        puntosPartida: {type:Number}
+      }],
       puntos: [{
          type:Number, required: true      
       }]
