@@ -1,4 +1,6 @@
 .prueba {
     background-color: red;
-    height: 100vh;
+    height: fit-content;
+    max-width: 500px;
+  width: 33%;
 }

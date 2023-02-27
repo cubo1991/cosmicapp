@@ -1,4 +1,6 @@
 .fondo{
     background-color: blue;
     height: 100vh;
+    max-width: 500px;
+  width: 33%;
 }

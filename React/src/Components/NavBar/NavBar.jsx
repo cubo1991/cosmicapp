@@ -1,9 +1,10 @@
 import React from "react";
-import logoCosmic from '../Media/LogoCosmic.png'
+import logoCosmic from '../../Media/LogoCosmic.png';
+import s from './NavBar.module.css'
 
 export const NavBar = () => {
   return (
-    <div>
+    <div className={s.navbar}>
       <div>
       <img src={logoCosmic} style={{height:"7rem"}} alt="Logo" />
       
