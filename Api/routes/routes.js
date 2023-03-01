@@ -26,6 +26,7 @@ router.get('/ranking', async (req, res, next) => {
       _id: jugador._id,
       puntosPartidas: jugador.puntosPartidas.slice(0, 10).reduce((a, b) => a + b, 0)
     }));
+    
  let jugadoresOrdenados = (jugadoresMap.sort((a, b) => b.puntosPartidas - a.puntosPartidas))
     res.json(jugadoresOrdenados);
   } catch (err) {

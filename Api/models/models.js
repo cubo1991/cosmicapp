@@ -25,6 +25,12 @@ const schemaJugador = new Schema ({
         type: Number,
         
     }],
+    podioCopa: [
+      {
+       primerPuesto: {type:Boolean, default: false},
+       segundoPuesto:{type:Boolean, default: false},
+       tercerPuesto: {type:Boolean, default:false}
+      }],
     copasJugadas:[{
       copa: {
         type: mongoose.Schema.Types.ObjectId,
@@ -39,7 +45,10 @@ const schemaJugador = new Schema ({
          type:Number, required: true      
       }]
   }],
+  campañaGanada: {type:Boolean, default:false}
 })
+
+  
 
 const schemaPartida = new Schema({
 fecha: {type: Date},
