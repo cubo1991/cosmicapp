@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import logoCosmic from '../../Media/LogoCosmic.png';
 import s from './NavBar.module.css'
 
@@ -18,7 +19,7 @@ export const NavBar = () => {
         <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
           <ul className="navbar-nav justify-content-evenly w-100">
             <li className="nav-item">
-              <a className="nav-link" href="# ">INICIO</a>
+            <Link to="/home" className="nav-link">INICIO</Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="# ">Últimos Resultados</a>
@@ -36,7 +37,8 @@ export const NavBar = () => {
               <a className="nav-link" href="# ">Boletín Cósmico</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="# ">Administrador</a>
+            <Link to="/admin" className="nav-link">Administrador</Link>
+            
             </li>
           </ul>
         </div>

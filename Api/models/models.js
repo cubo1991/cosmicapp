@@ -19,6 +19,7 @@ const schemaJugador = new Schema ({
     ataqueSolitario: {type:Number},
     defensaSolitaria: {type:Number},
     foto: {type: String},
+    escudo:{type:String},
     cumpleaños:{type:Date},
     biografia:{type: String},
     partidasDeCopa:[{
