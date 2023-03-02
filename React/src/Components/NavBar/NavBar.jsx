@@ -19,7 +19,7 @@ export const NavBar = () => {
         <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
           <ul className="navbar-nav justify-content-evenly w-100">
             <li className="nav-item">
-            <Link to="/home" className="nav-link">INICIO</Link>
+            <Link to="/" className="nav-link">INICIO</Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="# ">Últimos Resultados</a>

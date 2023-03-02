@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_JUGADORES, FETCH_RANKING } from '../Constantes/constantes';
+import { FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR } from '../Constantes/constantes';
 
 
 export const fetchJugadores = () => {
@@ -31,6 +31,25 @@ export const fetchJugadores = () => {
       } catch (error) {
         dispatch({
         type:FETCH_RANKING,
+        error: [error]});
+        console.log(error)
+      }
+    }
+  }
+
+  
+  export const postJugador = (data) => {
+    return async function (dispatch){
+    
+      try {
+       await axios.post('/jugador', data);
+        dispatch({
+          type:POST_JUGADOR,
+          
+        });
+      } catch (error) {
+        dispatch({
+        type:POST_JUGADOR,
         error: [error]});
         console.log(error)
       }

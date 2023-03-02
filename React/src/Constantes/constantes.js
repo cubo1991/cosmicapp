@@ -1,2 +1,3 @@
 export const FETCH_JUGADORES = 'FETCH_JUGADORES'
 export const FETCH_RANKING = 'FETCH_RANKING'
+export const POST_JUGADOR = 'POST_JUGADOR'
