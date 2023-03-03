@@ -13,58 +13,35 @@ export const FormularioJugador = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const [values, setValues] = useState({
-    nombre: "",
-    color: "",
-    puntos: 0,
-    copas: 0,
-    campañas: 0,
-    ranking: 1,
-    partidas: 0,
-    puntosPartidas: [],
-    colonias: 0,
-    victorias: 0,
-    victoriasEspeciales: 0,
-    ataqueSolitario: 0,
-    defensaSolitaria: 0,
-    foto: "",
-    escudo: "",
-    cumpleaños: "",
-    biografia: "",
-    partidasDeCopa: [],
-    podioCopa: [],
-    copasJugadas: [],
-    campañaGanada: false,
-  });
+  // const [values, setValues] = useState({
+  //   nombre: "",
+  //   color: "",
+  //   puntos: 0,
+  //   copas: 0,
+  //   campañas: 0,
+  //   ranking: 1,
+  //   partidas: 0,
+  //   puntosPartidas: [],
+  //   colonias: 0,
+  //   victorias: 0,
+  //   victoriasEspeciales: 0,
+  //   ataqueSolitario: 0,
+  //   defensaSolitaria: 0,
+  //   foto: "",
+  //   escudo: "",
+  //   cumpleaños: "",
+  //   biografia: "",
+  //   partidasDeCopa: [],
+  //   podioCopa: [],
+  //   copasJugadas: [],
+  //   campañaGanada: false,
+  // });
 
   const onSubmit = (data) => {
-   
-    setValues({
-        nombre: data.nombre,
-        color: data.color,
-        puntos: data.puntos,
-        copas: data.copas,
-        campañas: data.campañas,
-        ranking: data.ranking,
-        partidas: data.partidas,
-        puntosPartidas: [],
-        colonias: data.colonias ,
-        victorias: data.victorias,
-        victoriasEspeciales: data.victoriasEspeciales,
-        ataqueSolitario: data.ataqueSolitario,
-        defensaSolitaria: data.defensaSolitaria,
-        foto: "",
-        escudo: "",
-        cumpleaños: "",
-        biografia: data.biografia,
-        partidasDeCopa: [],
-        podioCopa: [],
-        copasJugadas: [],
-        campañaGanada: false,
-      })
-      dispatch(postJugador(values))
-    console.log(values);
-    // reset();
+   console.log(data)
+      dispatch(postJugador(data))
+    
+    reset();
   };
 
   return (
