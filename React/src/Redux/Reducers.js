@@ -1,4 +1,4 @@
-import { FETCH_JUGADORES, FETCH_RANKING } from "../Constantes/constantes";
+import { DELETE_JUGADORES, FETCH_JUGADORES, FETCH_RANKING } from "../Constantes/constantes";
 
 
 
@@ -22,6 +22,11 @@ switch (action.type) {
             rankingJugadores: action.payload
 
         }
+        case DELETE_JUGADORES:
+            return{
+                ...state,
+                jugadores: []
+            }
         
    
 

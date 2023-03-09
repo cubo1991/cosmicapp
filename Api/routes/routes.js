@@ -57,7 +57,7 @@ router.get('/jugador/:id', async (req, res, next) => {
 });
 
 // POST
-router.post('/', async (req, res, next) => {
+router.post('/jugador', async (req, res, next) => {
   try {
     const { nombre, color, puntos, copas, campañas, ranking } = req.body;
     const jugador = new Jugador({ nombre, color, puntos, copas, campañas, ranking });
@@ -252,6 +252,18 @@ router.put('/:idCopa/:idJugador', async (req, res) => {
 // });
 
 // DELETE
+
+
+router.delete('/jugadores', async (req, res) => {
+  try {
+    await Jugador.deleteMany({});
+    console.log("Se han eliminado todos los documentos de la colección 'jugadores'.");
+    res.status(200).json({ message: 'Se eliminaron todos los jugadores.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al eliminar los jugadores.' });
+  }
+});
 router.delete('/:id', async (req, res, next) => {
   try {
     await Jugador.findByIdAndRemove(req.params.id);
@@ -261,6 +273,11 @@ router.delete('/:id', async (req, res, next) => {
     res.status(500).json({ error: 'Error del servidor' });
   }
 });
+
+
+
+
+
 
 
 module.exports = router

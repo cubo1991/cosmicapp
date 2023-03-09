@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR } from '../Constantes/constantes';
+import { DELETE_JUGADORES, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR } from '../Constantes/constantes';
 
 
 export const fetchJugadores = () => {
@@ -50,6 +50,23 @@ export const fetchJugadores = () => {
       } catch (error) {
         dispatch({
         type:POST_JUGADOR,
+        error: [error]});
+        console.log(error)
+      }
+    }
+  }
+  export const deleteJugadores = () =>{
+    return async function (dispatch){
+    
+      try {
+       await axios.delete('/jugadores', );
+        dispatch({
+          type:DELETE_JUGADORES,
+          
+        });
+      } catch (error) {
+        dispatch({
+        type:DELETE_JUGADORES,
         error: [error]});
         console.log(error)
       }

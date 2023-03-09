@@ -1,10 +1,18 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { deleteJugadores } from '../../Redux/Actions'
 import { FormCopa } from '../Formularios/FormCopa'
 import { FormularioJugador } from '../Formularios/FormJugador'
 import s from './Admin.module.css'
 
 export const Admin = () => {
+
+  let dispatch = useDispatch()
+  let onClickDelete = () =>{
+    dispatch(deleteJugadores()) }
+     
  
+
   return (
     <div className={s.elemento}>
       <div class="accordion" id="accordionExample">
@@ -48,7 +56,30 @@ export const Admin = () => {
   </div>
 </div>
    
-    
+   
+ 
+<button type="button" className={'btn btn-danger'} data-bs-toggle="modal" data-bs-target="#exampleModal">
+Eliminar todos los jugadores
+</button>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Acción irreversible</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro que querés eliminar a todos los jugadores de la base de datos?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onClick={onClickDelete} data-bs-dismiss="modal">Sip</button>
+        <button type="button" class="btn btn-danger">Nop</button>
+      </div>
+    </div>
+  </div>
+</div>
     </div>
   )
 }
