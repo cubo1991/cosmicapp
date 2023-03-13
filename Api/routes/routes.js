@@ -34,6 +34,19 @@ router.get('/ranking', async (req, res, next) => {
   }
 });
 
+
+
+
+router.get('/copa', async (req, res, next) => {
+  try {
+    const copas = await Copa.find();
+    console.log(copas)
+    res.json(copas);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get('/:idCopa', async (req, res, next) => {
   try {
     const { idCopa } = req.params;
@@ -74,7 +87,7 @@ router.post('/copa', async (req, res, next) => {
     const { _id, nombre, cantidadPartidas } = req.body;
     const copa = new Copa({ nombre: nombre, cantidadPartidas, jugadores: [] });
     const newCopa = await copa.save();
-
+    
     res.status(201).json({
       success: true,
       copa: newCopa

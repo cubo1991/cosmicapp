@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DELETE_JUGADORES, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR } from '../Constantes/constantes';
+import { CREATE_COPA, DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR } from '../Constantes/constantes';
 
 
 export const fetchJugadores = () => {
@@ -72,3 +72,37 @@ export const fetchJugadores = () => {
       }
     }
   }
+
+  export const createCopa =(data) => {
+    return async function (dispatch) {
+      try {
+        await axios.post('/copa', data);
+         dispatch({
+           type:CREATE_COPA,
+           
+         });
+       } catch (error) {
+         dispatch({
+         type:CREATE_COPA,
+         error: [error]});
+         console.log(error)
+       }
+    }
+  }
+  export const fetchCopas = () => {
+    return async function (dispatch) {
+      try {
+        const copas = await axios.get('/copa');
+        dispatch({
+          type: FETCH_COPAS,
+          payload: copas.data
+        });
+      } catch (error) {
+        dispatch({
+          type: FETCH_COPAS,
+          error: [error]
+        });
+        console.log(error);
+      }
+    };
+  };

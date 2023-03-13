@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchJugadores } from '../../Redux/Actions';
+import { fetchJugadores, createCopa } from '../../Redux/Actions';
 import Select from "react-select";
 
 export const FormCopa = () => {
@@ -15,7 +15,7 @@ export const FormCopa = () => {
     dispatch(fetchJugadores());
   }, [dispatch]);
   let jugadoresState = useSelector((state) => state.jugadores);
-  console.log(jugadoresState);
+;
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -23,6 +23,7 @@ export const FormCopa = () => {
     setNombre('');
     setCantidadPartidas('');
     setJugadores('');
+    dispatch(createCopa({ nombre, cantidadPartidas, jugadores }))
   };
 
   const handleNombreChange = (e) => {
@@ -35,18 +36,18 @@ export const FormCopa = () => {
     setErrors((prevState) => ({ ...prevState, cantidadPartidas: null }));
   };
 
-  const handleJugadoresChange = (e) => {
-    const options = e.target.options;
-    const selectedIds = [];
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].selected) {
-        selectedIds.push(options[i].value);
-      }
-    }
-    setJugadoresSeleccionados(selectedIds);
-    setJugadores(selectedIds); // actualizar el estado de jugadores también
-    setErrors((prevState) => ({ ...prevState, jugadores: null }));
-  };
+  // const handleJugadoresChange = (e) => {
+  //   const options = e.target.options;
+  //   const selectedIds = [];
+  //   for (let i = 0; i < options.length; i++) {
+  //     if (options[i].selected) {
+  //       selectedIds.push(options[i].value);
+  //     }
+  //   }
+  //   setJugadoresSeleccionados(selectedIds);
+  //   setJugadores(selectedIds); // actualizar el estado de jugadores también
+  //   setErrors((prevState) => ({ ...prevState, jugadores: null }));
+  // };
     
 
   const handleBlur = (e) => {
