@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { postJugador } from "../../Redux/Actions";
@@ -13,7 +13,7 @@ export const FormularioJugador = () => {
     reset,
     formState: { errors },
   } = useForm();
-  // const [values, setValues] = useState({
+ 
   //   nombre: "",
   //   color: "",
   //   puntos: 0,

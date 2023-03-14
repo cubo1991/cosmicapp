@@ -1,4 +1,4 @@
-import { CREATE_COPA, DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING } from "../Constantes/constantes";
+import { DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, PUT_JUGADORES } from "../Constantes/constantes";
 
 
 
@@ -34,6 +34,10 @@ switch (action.type) {
                 ...state,
                 copas: action.payload
             }
+            case PUT_JUGADORES:
+                return{
+                    ...state,
+                }
        
         
    

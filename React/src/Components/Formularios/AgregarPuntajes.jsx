@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchJugadores, fetchCopas, putJugadores } from '../../Redux/Actions';
 import Select from "react-select";
 
-export const FormJugadorCopa = () => {
+
+export const AgregarPuntajes = () => {
     let dispatch = useDispatch();
     useEffect(() => {
       dispatch(fetchJugadores());
@@ -11,35 +12,34 @@ export const FormJugadorCopa = () => {
     }, [dispatch]);
     let jugadoresState = useSelector((state) => state.jugadores);
     let copasState = useSelector((state) => state.copas);
-const [copaData, setCopaData] = useState({
-    copaId: '',
-    jugadoresId: ''
-  });
+      const [copaData, setCopaData] = useState({
+        copaId: '',      
+      });
+    let copaEncontrada = copasState.find(copa => copa._id === copaData.copaId) 
+ 
+    console.log(copaEncontrada)
+    
+    const optionsCopa = copasState.map((e => {
+        return {
+          value: e._id,
+          label: e.nombre
+        } 
+      
+      }) )
+      
+      let optionsJugador = [];
+      if (copaEncontrada) {
+        optionsJugador = jugadoresState
+          .filter(jugador => copaEncontrada.jugadores.includes(jugador._id))
+          .map(jugador => ({
+            value: jugador._id,
+            label: jugador.nombre
+          }));
+      }
 
-
-const optionsCopa = copasState.map((e => {
-  return {
-    value: e._id,
-    label: e.nombre
-  } 
-
-}) )
-
-const optionsJugador = jugadoresState.map((e => {
-  return {
-    value: e._id,
-    label: e.nombre
-  } 
-
-}) )
-const onSubmit = (e) => {
- e.preventDefault()
-  dispatch(putJugadores(copaData))
-}
-
-console.log(copaData)
-  return (
-    <div className="container mt-5">
+    return (
+    <div>
+          <div className="container mt-5">
       <form>
         <div className="form-group">
           <label htmlFor="idCopa">ID de la copa:</label>
@@ -58,16 +58,17 @@ console.log(copaData)
             isMulti
             options={optionsJugador}   
             onChange={(options)=> {
-              let idJugadores = options.map((e) => e.value)
-              
-              setCopaData((copa) => ({...copa,jugadoresId: idJugadores}))
+             
             }}        
           />
         </div>
-        <button type="submit" onClick={onSubmit} className="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Enviar
         </button>
       </form>
     </div>
-  );
+
+
+    </div>
+  )
 }
