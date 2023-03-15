@@ -37,7 +37,7 @@ const onSubmit = (e) => {
   dispatch(putJugadores(copaData))
 }
 
-console.log(copaData)
+
   return (
     <div className="container mt-5">
       <form>

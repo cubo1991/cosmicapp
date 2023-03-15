@@ -124,57 +124,57 @@ router.post('/partida', async (req, res) => {
 
  
 // PUT
-router.put('/puntuacionJugador', async (req, res) => {
-  const { idCopa, jugadores } = req.body;
-    console.log(idCopa)
-    console.log(jugadores)
-  try {
-    
-    const puntajesPartidas = [];
-    await Copa.updateOne({_id: idCopa},{$inc:{partidasJugadas: 1}} )
+  router.put('/puntuacionJugador', async (req, res) => {
+    const { jugadores, idCopa } = req.body;
+      console.log(idCopa)
+      console.log(jugadores)
+    try {
+      
+      const puntajesPartidas = [];
+      await Copa.updateOne({_id: idCopa},{$inc:{partidasJugadas: 1}} )
 
-    for (const jugadorInfo of jugadores) {
-      const { idJugador, coloniasInternas, coloniasExternas, puntosVictoria, victoriasEspeciales, ataqueSolitario, defensaSolitaria } = jugadorInfo;
+      for (const jugadorInfo of jugadores) {
+        const { idJugador, coloniasInternas, coloniasExternas, puntosVictoria, victoriasEspeciales, ataqueSolitario, defensaSolitaria } = jugadorInfo;
 
-      let puntajePartida = coloniasInternas + coloniasExternas * 2 + puntosVictoria;
-      puntajesPartidas.push(puntajePartida);
+        let puntajePartida = coloniasInternas + coloniasExternas * 2 + puntosVictoria;
+        puntajesPartidas.push(puntajePartida);
 
-      if (puntosVictoria) {
-        await Jugador.updateOne({ _id: idJugador }, { $inc: { victorias: 1 } });
+        if (puntosVictoria) {
+          await Jugador.updateOne({ _id: idJugador }, { $inc: { victorias: 1 } });
+        }
+        if (victoriasEspeciales) {
+          await Jugador.updateOne({ _id: idJugador }, { $inc: { victoriasEspeciales: 1 } });
+        }
+        if (ataqueSolitario) {
+          await Jugador.updateOne({ _id: idJugador }, { $set: { ataqueSolitario } });
+        }
+        if (defensaSolitaria) {
+          await Jugador.updateOne({ _id: idJugador }, { $set: { defensaSolitaria } });
+        }
+
+        const jugador = await Jugador.findById(idJugador);
+
+        if (!jugador) {
+          return res.status(404).json({ error: 'Jugador no encontrado' });
+        }
+        jugador.puntosPartidas.unshift(puntajePartida);
+        const copa = jugador.copasJugadas.find((c) => c.copa.equals(idCopa));
+
+        if (!copa) {
+          return res.status(404).json({ error: 'Copa no encontrada para este jugador' });
+        }
+
+        copa.puntos.push(puntajePartida);
+
+        await jugador.save();
       }
-      if (victoriasEspeciales) {
-        await Jugador.updateOne({ _id: idJugador }, { $inc: { victoriasEspeciales: 1 } });
-      }
-      if (ataqueSolitario) {
-        await Jugador.updateOne({ _id: idJugador }, { $set: { ataqueSolitario } });
-      }
-      if (defensaSolitaria) {
-        await Jugador.updateOne({ _id: idJugador }, { $set: { defensaSolitaria } });
-      }
 
-      const jugador = await Jugador.findById(idJugador);
-
-      if (!jugador) {
-        return res.status(404).json({ error: 'Jugador no encontrado' });
-      }
-      jugador.puntosPartidas.unshift(puntajePartida);
-      const copa = jugador.copasJugadas.find((c) => c.copa.equals(idCopa));
-
-      if (!copa) {
-        return res.status(404).json({ error: 'Copa no encontrada para este jugador' });
-      }
-
-      copa.puntos.push(puntajePartida);
-
-      await jugador.save();
+      res.json(puntajesPartidas);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error del servidor' });
     }
-
-    res.json(puntajesPartidas);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error del servidor' });
-  }
-});
+  });
 
 router.put('/jugador/:idJugador', async (req, res, next) => {
   try {

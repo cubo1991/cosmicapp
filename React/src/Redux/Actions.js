@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CREATE_COPA, DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR, PUT_JUGADORES } from '../Constantes/constantes';
+import { CREATE_COPA, DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR, PUT_JUGADORES, PUT_PUNTOSJUGADORES } from '../Constantes/constantes';
 
 
 export const fetchJugadores = () => {
@@ -108,7 +108,7 @@ export const fetchJugadores = () => {
   };
 
   export const putJugadores = (data) =>{
-    console.log(data)
+   
     return async function (dispatch){
       try{
         await axios.put('/copa/id/agregarJugador', data);
@@ -123,4 +123,23 @@ export const fetchJugadores = () => {
         })
       }
     }
+  }
+
+  export const putPuntosJugadores = (data) =>{
+    console.log(data)
+    return async function(dispatch){
+try{
+  await axios.put('/puntuacionJugador',data );
+  dispatch({
+    type: PUT_PUNTOSJUGADORES
+  })
+
+}catch(error){
+  dispatch({
+    type:PUT_PUNTOSJUGADORES,
+    error:[error]
+  })
+
+}}
+
   }

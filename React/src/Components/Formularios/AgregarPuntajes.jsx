@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchJugadores, fetchCopas, putJugadores } from '../../Redux/Actions';
+import { fetchJugadores, fetchCopas,putPuntosJugadores } from '../../Redux/Actions';
 import Select from "react-select";
 
 
 export const AgregarPuntajes = () => {
+
+  
+  const [ejemplo, setEjemplo] = useState([])
+
     let dispatch = useDispatch();
     useEffect(() => {
       dispatch(fetchJugadores());
@@ -17,7 +21,7 @@ export const AgregarPuntajes = () => {
       });
     let copaEncontrada = copasState.find(copa => copa._id === copaData.copaId) 
  
-    console.log(copaEncontrada)
+  
     
     const optionsCopa = copasState.map((e => {
         return {
@@ -26,24 +30,96 @@ export const AgregarPuntajes = () => {
         } 
       
       }) )
-      
-      let optionsJugador = [];
+  
+      const [formValues, setFormValues] = useState([{}]);
+
+      const handleInputChange = (event) => {
+        const { id, value } = event.target;
+        setFormValues((values) => ({
+          ...values,
+          [id]: value,
+        }));
+       
+      };
+    
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        const jugadores = jugadoresState
+          .filter((jugador) => copaEncontrada.jugadores.includes(jugador._id))
+          .map((jugador) => {
+            return {
+              jugador: jugador._id,
+              coloniasInternas: formValues[`coloniasInternas-${jugador._id}`],
+              coloniasExternas: formValues[`coloniasExternas-${jugador._id}`],
+              puntosVictoria: formValues[`puntosVictoria-${jugador._id}`],
+              victoriaEspecial: formValues[`victoriaEspecial-${jugador._id}`] || false,
+              ataqueSolitario: formValues[`ataqueSolitario-${jugador._id}`],
+              defensaSolitaria: formValues[`defensaSolitaria-${jugador._id}`],
+            };
+          });
+         console.log(jugadores, copaData.copaId);
+         dispatch(putPuntosJugadores(jugadores,copaData.copaId))
+          
+      };
+      let jugadoresMap = [];
       if (copaEncontrada) {
-        optionsJugador = jugadoresState
+        jugadoresMap = jugadoresState
           .filter(jugador => copaEncontrada.jugadores.includes(jugador._id))
-          .map(jugador => ({
-            value: jugador._id,
-            label: jugador.nombre
-          }));
+          .map(jugador => (
+            <tr key={jugador._id}>
+              <td >{jugador.nombre}</td>
+              <td>
+                <div class="mb-3">
+                  <label htmlFor="coloniasInternas" class="form-label"></label>
+                  <input type="number" class="form-control" id={`coloniasInternas-${jugador._id}`} aria-describedby="coloniasInternas" onChange={handleInputChange} />
+                  <div id='coloniasInternas'  class="form-text"></div>
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <label htmlFor="coloniasExternas" class="form-label"></label>
+                  <input type="number" class="form-control"  id={`coloniasExternas-${jugador._id}`} aria-describedby="coloniasExternas" onChange={handleInputChange} />
+                  <div id="coloniasExternas" class="form-text"></div>
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <label htmlFor="puntosVictoria" class="form-label"></label>
+                  <input type="number" class="form-control" id={`puntosVictoria-${jugador._id}`} aria-describedby="puntosVictoria" onChange={handleInputChange} />
+                  <div  id="puntosVictoria" class="form-text"></div>
+                </div>
+              </td>
+              <td>
+                <div class="mb-1 d-flex justify-content-center">
+                <input type="checkbox" className="form-check-input" id={`victoriaEspecial-${jugador._id}`}  onChange={handleInputChange} />
+              <label htmlFor="victoriaEspecial" className="form-label"/>
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <label htmlFor="ataqueSolitario" class="form-label"></label>
+                  <input type="number" class="form-control" id={`ataqueSolitario-${jugador._id}`} aria-describedby="ataqueSolitario" onChange={handleInputChange} />
+                  <div id="ataqueSolitario"  class="form-text"></div>
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <label htmlFor="defensaSolitaria" class="form-label"></label>
+                  <input type="number" class="form-control" id={`defensaSolitaria-${jugador._id}`} aria-describedby="defensaSolitaria" onChange={handleInputChange} />
+                  <div id="defensaSolitaria"  class="form-text"></div>
+                </div>
+              </td>
+            </tr>
+          ));
       }
 
-      let jugadoresMap = jugadoresState.map(e => <h2>hola</h2>);
+      
     return (
     <div>
           <div className="container mt-5">
       <form>
         <div className="form-group">
-          <label htmlFor="idCopa">ID de la copa:</label>
+          <label htmlFor="idCopa">Nombre de la copa:</label>
           <Select
           id="idCopa"
           options={optionsCopa}
@@ -52,7 +128,7 @@ export const AgregarPuntajes = () => {
           }}  
           />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="idJugador">ID del jugador:</label>
           <Select
             id="idJugador"
@@ -62,13 +138,35 @@ export const AgregarPuntajes = () => {
              
             }}        
           />
-        </div>
-        <button type="submit" className="btn btn-primary">
+        </div> */}
+        <button type="submit" onClick={handleSubmit}className="btn btn-primary">
           Enviar
         </button>
       </form>
       <form>
-        {jugadoresMap}
+      <table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Colonias internas</th>
+      <th>Colonias externas</th>
+      <th>Puntos de victoria</th>
+      <th>Victoria especial</th>
+      <th>Ataque solitario</th>
+      <th>Defensa solitaria</th>
+    </tr>
+  </thead>
+  <tbody>
+    {jugadoresMap}
+  </tbody>
+</table>
+
+
+
+
+
+
+
       </form>
     </div>
 
