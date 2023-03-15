@@ -37,6 +37,7 @@ export const AgregarPuntajes = () => {
           }));
       }
 
+      let jugadoresMap = jugadoresState.map(e => <h2>hola</h2>);
     return (
     <div>
           <div className="container mt-5">
@@ -65,6 +66,9 @@ export const AgregarPuntajes = () => {
         <button type="submit" className="btn btn-primary">
           Enviar
         </button>
+      </form>
+      <form>
+        {jugadoresMap}
       </form>
     </div>
 

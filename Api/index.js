@@ -12,7 +12,7 @@ mongoose.set(`strictQuery`,false)
 
 //Settings
 
-app.set('port', process.env.PORT || 3000)
+app.set('port', process.env.PORT || 3001)
 const port = app.get('port')
 
 //Middlewares

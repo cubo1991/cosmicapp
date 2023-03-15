@@ -131,6 +131,7 @@ router.put('/puntuacionJugador', async (req, res) => {
   try {
     
     const puntajesPartidas = [];
+    await Copa.updateOne({_id: idCopa},{$inc:{partidasJugadas: 1}} )
 
     for (const jugadorInfo of jugadores) {
       const { idJugador, coloniasInternas, coloniasExternas, puntosVictoria, victoriasEspeciales, ataqueSolitario, defensaSolitaria } = jugadorInfo;

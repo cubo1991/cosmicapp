@@ -86,7 +86,10 @@ cantidadPartidas:{
     ref: 'jugadores'
   }],
 
-
+partidasJugadas:{
+  type: Number,
+  default:0
+}
 
 }, {timestamps: true})
 
