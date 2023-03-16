@@ -25,7 +25,7 @@ export const NavBar = () => {
               <a className="nav-link" href="# ">Últimos Resultados</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="# ">Campañas</a>
+            <Link to="/copas" className="nav-link">Copas</Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="# ">Historial Cósmico</a>

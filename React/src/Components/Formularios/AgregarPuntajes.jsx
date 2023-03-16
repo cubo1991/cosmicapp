@@ -48,17 +48,19 @@ export const AgregarPuntajes = () => {
           .filter((jugador) => copaEncontrada.jugadores.includes(jugador._id))
           .map((jugador) => {
             return {
-              jugador: jugador._id,
-              coloniasInternas: formValues[`coloniasInternas-${jugador._id}`],
-              coloniasExternas: formValues[`coloniasExternas-${jugador._id}`],
-              puntosVictoria: formValues[`puntosVictoria-${jugador._id}`],
+              idJugador: jugador._id,
+              coloniasInternas: Number(formValues[`coloniasInternas-${jugador._id}`]),
+              coloniasExternas: Number(formValues[`coloniasExternas-${jugador._id}`]),
+              puntosVictoria: Number(formValues[`puntosVictoria-${jugador._id}`]),
               victoriaEspecial: formValues[`victoriaEspecial-${jugador._id}`] || false,
-              ataqueSolitario: formValues[`ataqueSolitario-${jugador._id}`],
-              defensaSolitaria: formValues[`defensaSolitaria-${jugador._id}`],
+              ataqueSolitario: Number(formValues[`ataqueSolitario-${jugador._id}`]),
+              defensaSolitaria: Number(formValues[`defensaSolitaria-${jugador._id}`]),
             };
           });
-         console.log(jugadores, copaData.copaId);
-         dispatch(putPuntosJugadores(jugadores,copaData.copaId))
+          let copa =  copaData.copaId
+          let puntaje = [copa,jugadores]
+        
+         dispatch(putPuntosJugadores(puntaje))
           
       };
       let jugadoresMap = [];
@@ -138,10 +140,7 @@ export const AgregarPuntajes = () => {
              
             }}        
           />
-        </div> */}
-        <button type="submit" onClick={handleSubmit}className="btn btn-primary">
-          Enviar
-        </button>
+        </div> */}      
       </form>
       <form>
       <table>
@@ -160,6 +159,9 @@ export const AgregarPuntajes = () => {
     {jugadoresMap}
   </tbody>
 </table>
+<button type="submit" onClick={handleSubmit}className="btn btn-primary">
+          Enviar
+        </button>
 
 
 
