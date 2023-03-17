@@ -9,7 +9,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Admin } from './Components/Admin/Admin';
 import { NavBar } from './Components/NavBar/NavBar';
 import { Copas } from './Components/Copas/Copas';
-import { Copa } from './Components/Copas/Copa';
+import { CopaDetail } from './Components/Copas/CopaDetail';
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
       <Route path ='/' element={<Home/>}/> 
       <Route path='/admin' element={<Admin/>}/>
       <Route path='/copas' element={<Copas/>}/>
-      <Route path='/copas/:id' element={<Copa/>}/>
+      <Route path='/copas/:id' element={<CopaDetail/>}/>
       </Routes>
       
       

@@ -19,7 +19,10 @@ export const AgregarPuntajes = () => {
       const [copaData, setCopaData] = useState({
         copaId: '',      
       });
-    let copaEncontrada = copasState.find(copa => copa._id === copaData.copaId) 
+    let copaEncontrada = copasState.find(copa => copa._id === copaData.copaId)  || null
+    
+
+  
  
   
     
@@ -117,7 +120,13 @@ export const AgregarPuntajes = () => {
 
       
     return (
+
+      
     <div>
+
+      {
+ copaEncontrada && (copaEncontrada.partidasJugadas >= copaEncontrada.cantidadPartidas)
+ ?
           <div className="container mt-5">
       <form>
         <div className="form-group">
@@ -171,6 +180,10 @@ export const AgregarPuntajes = () => {
 
       </form>
     </div>
+    :
+    null
+
+      }
 
 
     </div>
