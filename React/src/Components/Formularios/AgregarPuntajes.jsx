@@ -7,7 +7,7 @@ import Select from "react-select";
 export const AgregarPuntajes = () => {
 
   
-  const [ejemplo, setEjemplo] = useState([])
+
 
     let dispatch = useDispatch();
     useEffect(() => {
@@ -124,9 +124,7 @@ export const AgregarPuntajes = () => {
       
     <div>
 
-      {
- copaEncontrada && (copaEncontrada.partidasJugadas >= copaEncontrada.cantidadPartidas)
- ?
+
           <div className="container mt-5">
       <form>
         <div className="form-group">
@@ -139,18 +137,11 @@ export const AgregarPuntajes = () => {
           }}  
           />
         </div>
-        {/* <div className="form-group">
-          <label htmlFor="idJugador">ID del jugador:</label>
-          <Select
-            id="idJugador"
-            isMulti
-            options={optionsJugador}   
-            onChange={(options)=> {
-             
-            }}        
-          />
-        </div> */}      
+       
       </form>
+      {
+      copaEncontrada && (copaEncontrada.partidasJugadas < copaEncontrada.cantidadPartidas)
+      ?
       <form>
       <table>
   <thead>
@@ -179,11 +170,11 @@ export const AgregarPuntajes = () => {
 
 
       </form>
-    </div>
-    :
-    null
-
+      :
+      <p>Seleccione una copa válida</p>
       }
+    </div>
+    
 
 
     </div>
