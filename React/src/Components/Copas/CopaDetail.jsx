@@ -19,7 +19,7 @@ export const CopaDetail = () => {
     let jugadoresState = useSelector((state) => state.jugadores);
     let copa = copasState.find(copa => copa._id === id ) || []
     let jugadores = jugadoresState.filter(jugador => jugador.copasJugadas.some(copaJugada => copaJugada.copa === id))
-    console.log(copa.cantidadPartidas)
+
    
     let celdas = [];
     for( let i = 0; i < copa.cantidadPartidas; i++){
@@ -32,7 +32,7 @@ export const CopaDetail = () => {
 
     
    })
-   console.log(jugadoresMap)
+
    let renderJugadores = jugadoresMap.map((jugador) => {
     let puntajesJugador = [];
     for (let i = 0; i < copa.cantidadPartidas; i++) {

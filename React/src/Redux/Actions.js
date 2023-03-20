@@ -146,3 +146,7 @@ try{
 }}
 
   }
+
+  export const putRanking = (data) => {
+    console.log(data)
+  }

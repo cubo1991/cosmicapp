@@ -1,4 +1,4 @@
-import { DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, PUT_JUGADORES } from "../Constantes/constantes";
+import { DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, PUT_JUGADORES, PUT_RANKING } from "../Constantes/constantes";
 
 
 
@@ -6,7 +6,8 @@ const initialState = {
 
       jugadores: [],
       rankingJugadores: [],
-      copas: []
+      copas: [],
+      copaFinalizada: []
 }
 
 export default function reducer(state = initialState, action) {
@@ -37,6 +38,11 @@ switch (action.type) {
             case PUT_JUGADORES:
                 return{
                     ...state,
+                }
+            case PUT_RANKING:
+                return{
+                    ...state,
+                    copaFinalizada: action.payload
                 }
        
         

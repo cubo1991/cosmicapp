@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchJugadores, fetchCopas,putPuntosJugadores } from '../../Redux/Actions';
+import { fetchJugadores, fetchCopas,putPuntosJugadores, putRanking } from '../../Redux/Actions';
 import Select from "react-select";
 
 
 export const AgregarPuntajes = () => {
 
-  
+
+
 
 
     let dispatch = useDispatch();
@@ -19,10 +20,53 @@ export const AgregarPuntajes = () => {
       const [copaData, setCopaData] = useState({
         copaId: '',      
       });
+      const [ordenados,setOrdenados] = useState([])
     let copaEncontrada = copasState.find(copa => copa._id === copaData.copaId)  || null
     
-
+    let copa = copasState.find(copa => copa._id === copaData.copaId ) || []
+    let jugadores = jugadoresState.filter(jugador => jugador.copasJugadas.some(copaJugada => copaJugada.copa === copaData.copaId))
+    let jugadoresPodio = jugadores.map((jugador) => {
+      let jugadoresCopa = {...jugador, copasJugadas: jugador.copasJugadas.find(copa => copa.copa === copaData.copaId)}
+      return  jugadoresCopa
   
+      
+     })
+    
+     
+     
+     let renderJugadores = jugadoresPodio.map((jugador) => {
+      let puntajesJugador = [];
+      for (let i = 0; i < copa.cantidadPartidas; i++) {
+        puntajesJugador.push(jugador.puntosPartidas[i]);
+      }
+    
+
+  let numbers = jugador.copasJugadas.puntos
+    let total = numbers.reduce((a, b) => Number(a) + Number(b), 0);
+ 
+    
+    return [total, jugador._id]
+     
+    });
+
+let ordenarJugadores = () => {
+  let jugadoresOrdenados = renderJugadores.sort((a, b) => {
+    if (a[0] < b[0]) {
+      return 1; // a es menor que b
+    } else if (a[0] > b[0]) {
+      return -1; // a es mayor que b
+    } else {
+      return 0; // a y b son iguales
+    }
+  })
+
+  setOrdenados(jugadoresOrdenados)
+
+  dispatch(putRanking(ordenados))
+}
+
+
+   
  
   
     
@@ -64,7 +108,7 @@ export const AgregarPuntajes = () => {
           let puntaje = [copa,jugadores]
         
          dispatch(putPuntosJugadores(puntaje))
-          
+  
       };
       let jugadoresMap = [];
       if (copaEncontrada) {
@@ -171,7 +215,15 @@ export const AgregarPuntajes = () => {
 
       </form>
       :
-      <p>Seleccione una copa válida</p>
+      copaEncontrada && (copaEncontrada.partidasJugadas > 0)
+      ?
+        <button onClick={ordenarJugadores}>Finalizar Copa</button>
+        :
+        <p>Ingresar una copa valida</p>
+     
+     
+
+
       }
     </div>
     

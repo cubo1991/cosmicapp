@@ -19,15 +19,28 @@ router.get('/jugadores', async (req, res, next) => {
 
 router.get('/ranking', async (req, res, next) => {
   try {
-    const jugadores = await Jugador.find({}, "puntosPartidas nombre");
+    const jugadores = await Jugador.find({}, "puntosPartidas nombre podioCopa");
+
+    const jugadoresMap = jugadores.map(jugador => {
+      const puntosPartidas = jugador.puntosPartidas.slice(0, 10).reduce((a, b) => a + b, 0);
+      
+      if(jugador.podioCopa.length > 0){
+        const podio = jugador.podioCopa[0]; // consideramos solo el primer elemento del arreglo, ya que según el esquema, podioCopa es un arreglo con un solo elemento
+        
+        if(podio.primerPuesto) puntosPartidas += 10;
+        else if(podio.segundoPuesto) puntosPartidas += 7;
+        else if(podio.tercerPuesto) puntosPartidas += 5;
+      }
+
+      return {
+        nombre: jugador.nombre,
+        _id: jugador._id,
+        puntosPartidas: puntosPartidas
+      };
+    });
     
-    const jugadoresMap = jugadores.map(jugador => ({
-      nombre: jugador.nombre,
-      _id: jugador._id,
-      puntosPartidas: jugador.puntosPartidas.slice(0, 10).reduce((a, b) => a + b, 0)
-    }));
+    const jugadoresOrdenados = jugadoresMap.sort((a, b) => b.puntosPartidas - a.puntosPartidas);
     
- let jugadoresOrdenados = (jugadoresMap.sort((a, b) => b.puntosPartidas - a.puntosPartidas))
     res.json(jugadoresOrdenados);
   } catch (err) {
     next(err);
@@ -124,6 +137,10 @@ router.post('/partida', async (req, res) => {
 
  
 // PUT
+router.put('/setPodio', async (req,res) => {
+  let puntaje 
+
+})
   router.put('/puntuacionJugador', async (req, res) => {
     const { jugadores, idCopa } = req.body;
       
