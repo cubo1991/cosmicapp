@@ -136,7 +136,7 @@ router.post('/partida', async (req, res) => {
  
 // PUT
 router.put('/setPodio', async (req,res) => {
-  console.log(req.body)
+  console.log(req.body[0])
 
 try{
  await Jugador.updateMany({}, {

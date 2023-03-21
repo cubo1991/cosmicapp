@@ -26,12 +26,14 @@ const schemaJugador = new Schema ({
         type: Number,
         
     }],
-    podioCopa: 
-      {
-       primerPuesto: {type:Boolean, default: false},
-       segundoPuesto:{type:Boolean, default: false},
-       tercerPuesto: {type:Boolean, default:false}
-      },
+    podioCopa: {
+      type: Object,
+      default: {
+        primerPuesto: false,
+        segundoPuesto: false,
+        tercerPuesto: false
+      }
+    },
     copasJugadas:[{
       copa: {
         type: mongoose.Schema.Types.ObjectId,
