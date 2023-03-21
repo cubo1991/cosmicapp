@@ -11,13 +11,13 @@ const schemaJugador = new Schema ({
     copas:{type: Number, default: 0},
     campañas:{type: Number, default: 0},
     ranking:{type: Number, default: 1},
-    partidas:{type:Number},
+    partidas:{type:Number, default:0},
     puntosPartidas:[Number],
-    colonias:{type:Number},
-    victorias: {type:Number},
-    victoriasEspeciales: {type:Number},
-    ataqueSolitario: {type:Number},
-    defensaSolitaria: {type:Number},
+    colonias:{type:Number, default:0},
+    victorias: {type:Number, default:0},
+    victoriasEspeciales: {type:Number, default:0},
+    ataqueSolitario: {type:Number, default:0},
+    defensaSolitaria: {type:Number, default:0},
     foto: {type: String},
     escudo:{type:String},
     cumpleaños:{type:Date},
@@ -26,12 +26,12 @@ const schemaJugador = new Schema ({
         type: Number,
         
     }],
-    podioCopa: [
+    podioCopa: 
       {
        primerPuesto: {type:Boolean, default: false},
        segundoPuesto:{type:Boolean, default: false},
        tercerPuesto: {type:Boolean, default:false}
-      }],
+      },
     copasJugadas:[{
       copa: {
         type: mongoose.Schema.Types.ObjectId,

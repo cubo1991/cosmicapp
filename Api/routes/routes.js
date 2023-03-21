@@ -10,7 +10,7 @@ const {Jugador, Copa, Partida} = require('../models/models.js')
 router.get('/jugadores', async (req, res, next) => {
   try {
     const jugadores = await Jugador.find();
-    console.log(jugadores)
+   
     res.json(jugadores);
   } catch (err) {
     next(err);
@@ -22,15 +22,13 @@ router.get('/ranking', async (req, res, next) => {
     const jugadores = await Jugador.find({}, "puntosPartidas nombre podioCopa");
 
     const jugadoresMap = jugadores.map(jugador => {
-      const puntosPartidas = jugador.puntosPartidas.slice(0, 10).reduce((a, b) => a + b, 0);
+      let puntosPartidas = jugador.puntosPartidas.slice(0, 10).reduce((a, b) => a + b, 0);
       
-      if(jugador.podioCopa.length > 0){
-        const podio = jugador.podioCopa[0]; // consideramos solo el primer elemento del arreglo, ya que según el esquema, podioCopa es un arreglo con un solo elemento
-        
-        if(podio.primerPuesto) puntosPartidas += 10;
-        else if(podio.segundoPuesto) puntosPartidas += 7;
-        else if(podio.tercerPuesto) puntosPartidas += 5;
-      }
+    
+        if(jugador.podioCopa.primerPuesto === true) puntosPartidas += 10;
+        else if(jugador.podioCopa.segundoPuesto === true) puntosPartidas += 7;
+        else if(jugador.podioCopa.tercerPuesto === true) puntosPartidas += 5;
+      
 
       return {
         nombre: jugador.nombre,
@@ -38,7 +36,7 @@ router.get('/ranking', async (req, res, next) => {
         puntosPartidas: puntosPartidas
       };
     });
-    
+
     const jugadoresOrdenados = jugadoresMap.sort((a, b) => b.puntosPartidas - a.puntosPartidas);
     
     res.json(jugadoresOrdenados);
@@ -53,7 +51,7 @@ router.get('/ranking', async (req, res, next) => {
 router.get('/copa', async (req, res, next) => {
   try {
     const copas = await Copa.find();
-    console.log(copas)
+  
     res.json(copas);
   } catch (err) {
     next(err);
@@ -63,7 +61,7 @@ router.get('/copa', async (req, res, next) => {
 router.get('/:idCopa', async (req, res, next) => {
   try {
     const { idCopa } = req.params;
-    console.log(idCopa);
+
 
     const copa = await Copa.findById(idCopa);
 
@@ -123,7 +121,7 @@ router.post('/copa/:id', async (req, res, next) => {
 router.post('/partida', async (req, res) => {
   try {
     const { fecha, jugadoresPresentes, campaña } = req.body;
-    console.log(fecha);
+   
 
     const nuevaPartida = new Partida({ fecha, jugadoresPresentes, campaña });
     const partidaGuardada = await nuevaPartida.save();
@@ -138,7 +136,26 @@ router.post('/partida', async (req, res) => {
  
 // PUT
 router.put('/setPodio', async (req,res) => {
-  let puntaje 
+  console.log(req.body)
+
+try{
+ await Jugador.updateMany({}, {
+    $set: {
+      'podioCopa.primerPuesto': false,
+      'podioCopa.segundoPuesto': false,
+      'podioCopa.tercerPuesto': false
+    }})
+
+    await Jugador.updateOne({_id: req.body[0].ID},{$set:{'podioCopa.primerPuesto': true}} );
+    await Jugador.updateOne({_id: req.body[1].ID},{$set:{'podioCopa.segundoPuesto': true}} );
+    await Jugador.updateOne({_id: req.body[2].ID},{$set:{'podioCopa.tercerPuesto': true}} );
+} catch(err){
+  console.error(err);
+  res.status(500).json({ error: 'Error del servidor' });
+}
+
+
+  res.status(200).json("TodoOk");
 
 })
   router.put('/puntuacionJugador', async (req, res) => {
@@ -240,8 +257,7 @@ router.put('/:idPartida', async (req, res) => {
 router.put("/copa/id/agregarJugador", async (req, res) => {
   try {
     const {jugadoresId, copaId} = req.body
-  
-    console.log(jugadoresId, copaId)
+
     // Verificar si al menos un ID de jugador está repetido
     const jugadoresDuplicados = new Set(jugadoresId).size !== jugadoresId.length;
     if (jugadoresDuplicados) {
@@ -284,6 +300,16 @@ router.delete('/jugadores', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al eliminar los jugadores.' });
+  }
+});
+router.delete('/copa', async (req, res) => {
+  try {
+    await Copa.deleteMany({});
+    console.log("Se han eliminado todos los documentos de la colección 'copa'.");
+    res.status(200).json({ message: 'Se eliminaron todos los copas.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al eliminar los copas.' });
   }
 });
 router.delete('/:id', async (req, res, next) => {

@@ -9,7 +9,7 @@ let jugadoresTodos = useSelector((state) => state.jugadores)
 let ranking = useSelector((state) => state.rankingJugadores)
 let dispatch = useDispatch()
 console.log(jugadoresTodos[0])
-console.log(typeof jugadoresTodos)
+
 
 React.useEffect(() => {  
   dispatch(fetchJugadores())

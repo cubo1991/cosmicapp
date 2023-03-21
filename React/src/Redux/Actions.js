@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CREATE_COPA, DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR, PUT_JUGADORES, PUT_PUNTOSJUGADORES } from '../Constantes/constantes';
+import { CREATE_COPA, DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR, PUT_JUGADORES, PUT_PUNTOSJUGADORES, PUT_RANKING } from '../Constantes/constantes';
 
 
 export const fetchJugadores = () => {
@@ -129,7 +129,7 @@ export const fetchJugadores = () => {
 
    
     let datos = {'idCopa': data[0], 'jugadores': data[1]}
-  
+ 
     return async function(dispatch){
 try{
   await axios.put('/puntuacionJugador',datos );
@@ -148,5 +148,26 @@ try{
   }
 
   export const putRanking = (data) => {
-    console.log(data)
+   
+    let nuevosDatos = [];
+    for(let datos of data){
+      nuevosDatos.push({"Puntuación":datos[0], "ID":datos[1] })
+    }
+    let podio = nuevosDatos.slice(0,4)
+    console.log(podio)
+
+    return async function(dispatch){
+      try {
+        await axios.put('/setPodio', podio );
+        dispatch({
+          type: PUT_RANKING
+        })
+      } catch (error) {
+        dispatch({
+        type: PUT_RANKING,
+        error: [error]
+      })
+      }
+    }
   }
+  
