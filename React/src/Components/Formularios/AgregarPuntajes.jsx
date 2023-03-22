@@ -48,6 +48,11 @@ export const AgregarPuntajes = () => {
     return [total, jugador._id]
      
     });
+    useEffect(() => {
+      if (ordenados.length) {
+        dispatch(putRanking(ordenados));
+      }
+    }, [ordenados]);
 
 let ordenarJugadores = () => {
   let jugadoresOrdenados = renderJugadores.sort((a, b) => {
@@ -62,7 +67,7 @@ let ordenarJugadores = () => {
 
   setOrdenados(jugadoresOrdenados)
 
-  dispatch(putRanking(ordenados))
+
 }
 
 

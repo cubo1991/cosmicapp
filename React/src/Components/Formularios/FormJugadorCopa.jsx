@@ -42,7 +42,7 @@ const onSubmit = (e) => {
     <div className="container mt-5">
       <form>
         <div className="form-group">
-          <label htmlFor="idCopa">ID de la copa:</label>
+          <label htmlFor="idCopa">Nombre de la copa:</label>
           <Select
           id="idCopa"
           options={optionsCopa}
@@ -52,7 +52,7 @@ const onSubmit = (e) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="idJugador">ID del jugador:</label>
+          <label htmlFor="idJugador">Nombre del jugador:</label>
           <Select
             id="idJugador"
             isMulti

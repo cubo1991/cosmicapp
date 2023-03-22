@@ -148,7 +148,7 @@ try{
   }
 
   export const putRanking = (data) => {
-   
+  
     let nuevosDatos = [];
     for(let datos of data){
       nuevosDatos.push({"Puntuación":datos[0], "ID":datos[1] })

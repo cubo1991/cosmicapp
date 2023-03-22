@@ -95,8 +95,8 @@ router.post('/jugador', async (req, res, next) => {
 
 router.post('/copa', async (req, res, next) => {
   try {
-    const { _id, nombre, cantidadPartidas } = req.body;
-    const copa = new Copa({ nombre: nombre, cantidadPartidas, jugadores: [] });
+    const { jugadores, nombre, cantidadPartidas } = req.body;
+    const copa = new Copa({ nombre: nombre, cantidadPartidas, jugadores: jugadores });
     const newCopa = await copa.save();
     
     res.status(201).json({
