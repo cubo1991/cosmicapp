@@ -88,7 +88,7 @@ export const FormCopa = () => {
         )}
       </div>
 
-      <div className="form-group">
+      {/* <div className="form-group">
       <label htmlFor="jugadores">Jugadores</label>
       <Select
   options={jugadoresState.map((jugador) => ({ value: jugador._id, label: jugador.nombre }))}
@@ -103,7 +103,7 @@ export const FormCopa = () => {
   }}
 />
  
-    </div>
+    </div> */}
 
   <button type="submit" className="btn btn-primary">
     Guardar
