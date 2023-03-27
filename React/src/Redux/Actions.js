@@ -126,7 +126,7 @@ export const fetchJugadores = () => {
   }
 
   export const putPuntosJugadores = (data) =>{
-
+console.log(data)
    
     let datos = {'idCopa': data[0], 'jugadores': data[1]}
  

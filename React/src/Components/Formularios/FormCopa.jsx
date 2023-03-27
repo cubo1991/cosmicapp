@@ -88,22 +88,7 @@ export const FormCopa = () => {
         )}
       </div>
 
-      {/* <div className="form-group">
-      <label htmlFor="jugadores">Jugadores</label>
-      <Select
-  options={jugadoresState.map((jugador) => ({ value: jugador._id, label: jugador.nombre }))}
-  isMulti
-  name="jugadores"
-  value={jugadoresSeleccionados.map((jugadorId) => ({ value: jugadorId, label: jugadoresState.find((jugador) => jugador._id === jugadorId).nombre }))}
-  onChange={(options) => {
-    const selectedIds = options.map((option) => option.value);
-    setJugadoresSeleccionados(selectedIds);
-    setJugadores(selectedIds); // actualizar la variable jugadores
-    setErrors((prevState) => ({ ...prevState, jugadores: null }));
-  }}
-/>
- 
-    </div> */}
+   
 
   <button type="submit" className="btn btn-primary">
     Guardar

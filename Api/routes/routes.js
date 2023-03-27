@@ -167,40 +167,44 @@ try{
       await Copa.updateOne({_id: idCopa},{$inc:{partidasJugadas: 1}} )
 
       for (const jugadorInfo of jugadores) {
-        const { idJugador, coloniasInternas, coloniasExternas, puntosVictoria, victoriasEspeciales, ataqueSolitario, defensaSolitaria } = jugadorInfo;
+        const { idJugador, coloniasInternas, coloniasExternas, puntosVictoria, victoriasEspeciales, ataqueSolitario, defensaSolitaria, noJugo } = jugadorInfo;
+        if(noJugo === false)
+        {
 
-        let puntajePartida = coloniasInternas + coloniasExternas * 2 + puntosVictoria;
-        puntajesPartidas.push(puntajePartida);
-        await Jugador.updateOne({ _id: idJugador }, { $inc: { colonias: coloniasExternas } });
-        await Jugador.updateOne({ _id: idJugador }, { $inc: { partidas: 1 } });
-        if (puntosVictoria) {
-          await Jugador.updateOne({ _id: idJugador }, { $inc: { victorias: 1 } });
-        }
-        if (victoriasEspeciales) {
-          await Jugador.updateOne({ _id: idJugador }, { $inc: { victoriasEspeciales: 1 } });
-        }
-        if (ataqueSolitario) {
-          await Jugador.updateOne({ _id: idJugador }, { $set: { ataqueSolitario } });
-        }
-        if (defensaSolitaria) {
-          await Jugador.updateOne({ _id: idJugador }, { $set: { defensaSolitaria } });
+          let puntajePartida = coloniasInternas + coloniasExternas * 2 + puntosVictoria;
+          puntajesPartidas.push(puntajePartida);
+          await Jugador.updateOne({ _id: idJugador }, { $inc: { colonias: coloniasExternas } });
+          await Jugador.updateOne({ _id: idJugador }, { $inc: { partidas: 1 } });
+          if (puntosVictoria) {
+            await Jugador.updateOne({ _id: idJugador }, { $inc: { victorias: 1 } });
+          }
+          if (victoriasEspeciales) {
+            await Jugador.updateOne({ _id: idJugador }, { $inc: { victoriasEspeciales: 1 } });
+          }
+          if (ataqueSolitario) {
+            await Jugador.updateOne({ _id: idJugador }, { $set: { ataqueSolitario } });
+          }
+          if (defensaSolitaria) {
+            await Jugador.updateOne({ _id: idJugador }, { $set: { defensaSolitaria } });
+          }
+  
+          const jugador = await Jugador.findById(idJugador);
+  
+          if (!jugador) {
+            return res.status(404).json({ error: 'Jugador no encontrado' });
+          }
+          jugador.puntosPartidas.unshift(puntajePartida);
+          const copa = jugador.copasJugadas.find((c) => c.copa.equals(idCopa));
+  
+          if (!copa) {
+            return res.status(404).json({ error: 'Copa no encontrada para este jugador' });
+          }
+  
+          copa.puntos.push(puntajePartida);
+  
+          await jugador.save();
         }
 
-        const jugador = await Jugador.findById(idJugador);
-
-        if (!jugador) {
-          return res.status(404).json({ error: 'Jugador no encontrado' });
-        }
-        jugador.puntosPartidas.unshift(puntajePartida);
-        const copa = jugador.copasJugadas.find((c) => c.copa.equals(idCopa));
-
-        if (!copa) {
-          return res.status(404).json({ error: 'Copa no encontrada para este jugador' });
-        }
-
-        copa.puntos.push(puntajePartida);
-
-        await jugador.save();
       }
 
       res.json(puntajesPartidas);
@@ -277,7 +281,7 @@ router.put("/copa/id/agregarJugador", async (req, res) => {
         {_id: player},
         {
           $push:{
-            copasJugadas: {copa: copaId, puntos: 0}, $position: 0
+            copasJugadas: {copa: copaId}, $position: 0
           } 
         }
       )
@@ -306,6 +310,7 @@ router.delete('/jugadores', async (req, res) => {
 router.delete('/copa', async (req, res) => {
   try {
     await Copa.deleteMany({});
+    await Jugador.updateMany({}, {$set: {copasJugadas: []}});
     console.log("Se han eliminado todos los documentos de la colección 'copa'.");
     res.status(200).json({ message: 'Se eliminaron todos los copas.' });
   } catch (error) {

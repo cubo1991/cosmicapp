@@ -17,7 +17,7 @@ const [copaData, setCopaData] = useState({
   });
 
 
-const optionsCopa = copasState.map((e => {
+let optionsCopa = copasState.map((e => {
   return {
     value: e._id,
     label: e.nombre
@@ -25,7 +25,7 @@ const optionsCopa = copasState.map((e => {
 
 }) )
 
-const optionsJugador = jugadoresState.map((e => {
+let optionsJugador = jugadoresState.map((e => {
   return {
     value: e._id,
     label: e.nombre
@@ -33,41 +33,54 @@ const optionsJugador = jugadoresState.map((e => {
 
 }) )
 const onSubmit = (e) => {
- e.preventDefault()
+  e.preventDefault();
   dispatch(putJugadores(copaData))
-}
+    .then(() => dispatch(fetchCopas()))
+    .then(() => dispatch(fetchJugadores()))
+    .then(() => resetForm());
+};
+
+const resetForm = () => {
+  setCopaData({
+    copaId: "",
+    jugadoresId: ""
+  });
+};
 
 
-  return (
-    <div className="container mt-5">
-      <form>
-        <div className="form-group">
-          <label htmlFor="idCopa">Nombre de la copa:</label>
-          <Select
+return (
+  <div className="container mt-5">
+    <form>
+      <div className="form-group">
+        <label htmlFor="idCopa">Nombre de la copa:</label>
+        <Select
           id="idCopa"
           options={optionsCopa}
-          onChange={(options)=> {           
-            setCopaData((copa) => ({...copa,copaId: options.value}))
-          }}  
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="idJugador">Nombre del jugador:</label>
-          <Select
-            id="idJugador"
-            isMulti
-            options={optionsJugador}   
-            onChange={(options)=> {
-              let idJugadores = options.map((e) => e.value)
-              
-              setCopaData((copa) => ({...copa,jugadoresId: idJugadores}))
-            }}        
-          />
-        </div>
-        <button type="submit" onClick={onSubmit} className="btn btn-primary">
-          Enviar
-        </button>
-      </form>
-    </div>
-  );
+          value={optionsCopa.find((option) => option.value === copaData.copaId)}
+          onChange={(options) => {
+            setCopaData((copa) => ({ ...copa, copaId: options.value }));
+          }}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="idJugador">Nombre del jugador:</label>
+        <Select
+          id="idJugador"
+          isMulti
+          options={optionsJugador}
+          value={optionsJugador.filter((option) =>
+            copaData.jugadoresId.includes(option.value)
+          )}
+          onChange={(options) => {
+            let idJugadores = options.map((e) => e.value);
+            setCopaData((copa) => ({ ...copa, jugadoresId: idJugadores }));
+          }}
+        />
+      </div>
+      <button type="submit" onClick={onSubmit} className="btn btn-primary">
+        Enviar
+      </button>
+    </form>
+  </div>
+);
 }

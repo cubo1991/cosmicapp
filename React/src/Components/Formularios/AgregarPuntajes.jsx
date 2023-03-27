@@ -107,6 +107,7 @@ let ordenarJugadores = () => {
               victoriaEspecial: formValues[`victoriaEspecial-${jugador._id}`] || false,
               ataqueSolitario: Number(formValues[`ataqueSolitario-${jugador._id}`]),
               defensaSolitaria: Number(formValues[`defensaSolitaria-${jugador._id}`]),
+              noJugo: formValues[`noJugo-${jugador._id}`] || false,
             };
           });
           let copa =  copaData.copaId
@@ -163,6 +164,12 @@ let ordenarJugadores = () => {
                   <div id="defensaSolitaria"  class="form-text"></div>
                 </div>
               </td>
+              <td>
+                <div class="mb-1 d-flex justify-content-center">
+                <input type="checkbox" className="form-check-input" id={`noJugo-${jugador._id}`}  onChange={handleInputChange} />
+              <label htmlFor="noJugo" className="form-label"/>
+                </div>
+              </td>
             </tr>
           ));
       }
@@ -202,6 +209,7 @@ let ordenarJugadores = () => {
       <th>Victoria especial</th>
       <th>Ataque solitario</th>
       <th>Defensa solitaria</th>
+      <th>No jugó</th>
     </tr>
   </thead>
   <tbody>
