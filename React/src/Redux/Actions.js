@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CREATE_COPA, DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR, PUT_JUGADORES, PUT_PUNTOSJUGADORES, PUT_RANKING } from '../Constantes/constantes';
+import { COPA_FINALIZADA, CREATE_COPA, DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR, PUT_JUGADORES, PUT_PUNTOSJUGADORES, PUT_RANKING } from '../Constantes/constantes';
 
 
 export const fetchJugadores = () => {
@@ -39,6 +39,7 @@ export const fetchJugadores = () => {
 
   
   export const postJugador = (data) => {
+
     return async function (dispatch){
     
       try {
@@ -170,4 +171,21 @@ try{
       }
     }
   }
-  
+  export const  finCopa = (data) => {
+console.log(data)
+    return async function(dispatch){
+      try {
+        await axios.put(`/finCopa/${data}`);
+        dispatch({
+          type: COPA_FINALIZADA
+        })
+      } catch (error) {
+        dispatch({
+          type: COPA_FINALIZADA,
+          error: [error]
+        })
+        
+      }
+    }
+    
+  }

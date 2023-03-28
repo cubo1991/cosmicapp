@@ -38,6 +38,7 @@ export const FormularioJugador = () => {
   // });
 const [form, setForm] = useState(false);
 const onSubmit = (data) => {
+
   dispatch(postJugador(data))
     .then(() => dispatch(fetchJugadores()));
   setForm(!form);
@@ -46,7 +47,7 @@ const onSubmit = (data) => {
 useEffect(() => {
 
  dispatch(fetchJugadores())
-}, []);
+}, [dispatch]);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
       <div className="col-md-6">

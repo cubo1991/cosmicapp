@@ -2,24 +2,23 @@ import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchJugadores, fetchCopas,putPuntosJugadores, putRanking } from '../../Redux/Actions';
 import Select from "react-select";
+import { useNavigate  } from "react-router-dom";
 
 
 export const AgregarPuntajes = () => {
 
-
-
-
-
+  const navigate = useNavigate();
     let dispatch = useDispatch();
+    const [copaData, setCopaData] = useState({
+      copaId: '',      
+    });
     useEffect(() => {
       dispatch(fetchJugadores());
       dispatch(fetchCopas())
-    }, [dispatch]);
+    }, [dispatch, copaData]);
     let jugadoresState = useSelector((state) => state.jugadores);
     let copasState = useSelector((state) => state.copas);
-      const [copaData, setCopaData] = useState({
-        copaId: '',      
-      });
+   
       const [ordenados,setOrdenados] = useState([])
     let copaEncontrada = copasState.find(copa => copa._id === copaData.copaId)  || null
     
@@ -52,7 +51,7 @@ export const AgregarPuntajes = () => {
       if (ordenados.length) {
         dispatch(putRanking(ordenados));
       }
-    }, [ordenados]);
+    }, [ordenados, dispatch]);
 
 let ordenarJugadores = () => {
   let jugadoresOrdenados = renderJugadores.sort((a, b) => {
@@ -66,6 +65,7 @@ let ordenarJugadores = () => {
   })
 
   setOrdenados(jugadoresOrdenados)
+  
 
 
 }
@@ -113,7 +113,10 @@ let ordenarJugadores = () => {
           let copa =  copaData.copaId
           let puntaje = [copa,jugadores]
         
-         dispatch(putPuntosJugadores(puntaje))
+         dispatch(putPuntosJugadores(puntaje))    
+         .then(() => dispatch(fetchCopas()))
+         .then(() => dispatch(fetchJugadores()))
+        if(copaEncontrada.partidasJugadas < copaEncontrada.cantidadPartidas){  navigate("/copas/"+copa)}
   
       };
       let jugadoresMap = [];
@@ -228,9 +231,13 @@ let ordenarJugadores = () => {
 
       </form>
       :
-      copaEncontrada && (copaEncontrada.partidasJugadas > 0)
+      copaEncontrada && (copaEncontrada.partidasJugadas > 0) 
+      ?
+      copaEncontrada.finalizada === false  
       ?
         <button onClick={ordenarJugadores}>Finalizar Copa</button>
+        :
+        <p>Copa Finalizada</p>
         :
         <p>Ingresar una copa valida</p>
      

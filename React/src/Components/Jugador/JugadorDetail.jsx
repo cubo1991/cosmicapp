@@ -38,7 +38,7 @@ console.log(jugador[0])
     <td>{jugador[0].partidas}</td>
     <td>{jugador[0].victorias}</td>
     <td>{jugador[0].colonias}</td>
-    <td>{jugador[0].colonias/jugador[0].partidas}</td>
+    <td>{jugador[0].colonias/jugador[0].partidas || 0}</td>
     <td>{jugador[0].victoriasEspeciales}</td>
     <td>{jugador[0].campañas}</td>
     <td>{jugador[0].copas}</td>

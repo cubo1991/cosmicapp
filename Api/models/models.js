@@ -91,6 +91,11 @@ cantidadPartidas:{
 partidasJugadas:{
   type: Number,
   default:0
+},
+
+finalizada:{
+  type: Boolean,
+  default: false
 }
 
 }, {timestamps: true})

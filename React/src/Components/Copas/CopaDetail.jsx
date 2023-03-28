@@ -1,79 +1,181 @@
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+
+import React, {useEffect,useState} from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCopas, fetchJugadores } from '../../Redux/Actions';
-import s from './Copas.module.css';
+import { fetchCopas, fetchJugadores, putRanking, finCopa } from '../../Redux/Actions';
+import s from './Copas.module.css'
+import { useNavigate  } from "react-router-dom";
+
 
 export const CopaDetail = () => {
-  let { id } = useParams();
-  let dispatch = useDispatch();
+    let {id} = useParams()
+   
+    let dispatch = useDispatch();
+    let navigate = useNavigate()
+    useEffect(() => {
+      dispatch(fetchCopas())
+      dispatch(fetchJugadores())
+      
+      ;
+    }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(fetchCopas());
-    dispatch(fetchJugadores());
-  }, [dispatch]);
+  
+    const [ordenados,setOrdenados] = useState([])
+    const [ganador,setGanador] =useState(null)
+    let copasState = useSelector((state) => state.copas);
+    let jugadoresState = useSelector((state) => state.jugadores);
+    let copa = copasState.find(copa => copa._id === id ) || []
+    let jugadores = jugadoresState.filter(jugador => jugador.copasJugadas.some(copaJugada => copaJugada.copa === id))
 
-  let copasState = useSelector((state) => state.copas);
-  let jugadoresState = useSelector((state) => state.jugadores);
-  let copa = copasState.find((copa) => copa._id === id) || [];
-  let jugadores = jugadoresState.filter((jugador) =>
-    jugador.copasJugadas.some((copaJugada) => copaJugada.copa === id)
-  );
+   
+    let celdas = [];
+    for( let i = 0; i < copa.cantidadPartidas; i++){
+        celdas.push(`${i+1}`)
+    }
 
-  console.log(jugadores)
+   let jugadoresMap = jugadores.map((jugador) => {
+    let jugadoresCopa = {...jugador, copasJugadas: jugador.copasJugadas.find(copa => copa.copa === id)}
+    return  jugadoresCopa
 
-  let celdas = [];
-  for (let i = 0; i < copa.cantidadPartidas; i++) {
-    celdas.push(`${i + 1}`);
-  }
+    
+   })
 
-  let jugadoresMap = jugadores.map((jugador) => {
-    let jugadoresCopa = {
-      ...jugador,
-      copasJugadas: jugador.copasJugadas.find((copa) => copa.copa === id),
-    };
-    return jugadoresCopa;
-  });
+   let renderJugadores = jugadoresMap.map((jugador) => {
+    let puntajesJugador = [];
+ 
+ 
+    for (let i = 1; i < copa.cantidadPartidas; i++) {
+      puntajesJugador.push(jugador.puntosPartidas[i]);
+    }
+  
+    let renderPuntajesJugador = jugador.copasJugadas.puntos.map((puntaje) => {
+      return <td>{puntaje}</td>;
+    });
 
-  let renderJugadores = jugadoresMap.map((jugador) => {
-    // En lugar de renderizar cada puntaje en una celda diferente
-    // ahora creamos un array con todos los puntajes de un jugador
-    let puntajesJugador = jugador.copasJugadas.puntos.slice(1);
 
-    // Renderizamos la suma de los puntajes en la columna "Puntos"
-    let total = puntajesJugador.reduce((a, b) => Number(a) + Number(b), 0);
+
     return (
       <tr>
-        <Link to={'/jugadores/' + jugador._id}>
-          <td>{jugador.nombre}</td>
-        </Link>
-        {jugador.copasJugadas.puntos.slice(1).map((puntaje) => {
-          return <td>{puntaje}</td>;
-        })}
+      <Link to={'/jugadores/' + jugador._id}>  <td>{jugador.nombre}</td> </Link>
+        {renderPuntajesJugador}
+       
+      </tr>
+    );
+  });
+  let renderPuntajes = jugadoresMap.map((jugador) => {
+    let puntajesJugador = [];
+    let numbers= jugador.copasJugadas.puntos
+ 
+    for (let i = 1; i < copa.cantidadPartidas; i++) {
+      puntajesJugador.push(jugador.puntosPartidas[i]);
+    }
+  
+  
+
+  let total = numbers.reduce((a, b) => Number(a) + Number(b), 0);
+
+    return (
+      <tr>
+     
         <td>{total}</td>
       </tr>
     );
   });
+  useEffect(() => {
+    if (ordenados.length) {
+      dispatch(putRanking(ordenados));
+    }
+  }, [ordenados, dispatch]);
 
+  let ordenarJugadores = () => {
+    let jugadoresOrdenados = renderJugadores.sort((a, b) => {
+      if (a[0] < b[0]) {
+        return 1; // a es menor que b
+      } else if (a[0] > b[0]) {
+        return -1; // a es mayor que b
+      } else {
+        return 0; // a y b son iguales
+      }
+    })
+    
+    setOrdenados(jugadoresOrdenados)
+    dispatch(finCopa(id))
+    navigate("/")
+    
+  }
+  
+let rankingJugadores = jugadoresMap.map((jugador) => {
+  let puntajesJugador = [];
+  let numbers= jugador.copasJugadas.puntos
+
+  for (let i = 1; i < copa.cantidadPartidas; i++) {
+    puntajesJugador.push(jugador.puntosPartidas[i]);
+  }
+
+
+  for (let i = 1; i < copa.cantidadPartidas; i++) {
+    puntajesJugador.push(jugador.puntosPartidas[i]);
+  }
+
+
+
+let total = numbers.reduce((a, b) => Number(a) + Number(b), 0);
+jugador.total = total
+return jugador
+
+
+  
+});
+let ranking = rankingJugadores.sort(((a, b) => {
+  if (a < b) {
+    return 1; // a es menor que b
+  } else if (a> b) {
+    return -1; // a es mayor que b
+  } else {
+    return 0; // a y b son iguales
+  }
+}))
+
+console.log(ranking)
   return (
     <div className={s.elemento}>
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            {celdas.map((e) => {
-              return <th> {e} </th>;
-            })}
-            <th>Puntos</th>
-          </tr>
-        </thead>
-        <tbody>{renderJugadores}</tbody>
-      </table>
+            <table>
+  <thead>
+    <tr>
+      <th>Nombre</th>    
+
+        {celdas.map((e) => {return <th> {e} </th>} )}
+     
+    
+    
+    </tr>
+  </thead>
+  <tbody>
+  {renderJugadores} 
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+         
+      <th>Puntos</th>
+    </tr>
+  </thead>
+  <tbody>
+ {renderPuntajes}
+  </tbody>
+</table>
+{
+copa.finalizada === false
+
+?
+<button onClick={ordenarJugadores}>Finalizar Copa</button>
+:
+<div>
+  <p>El campeón de esta copa es {ganador}</p>
+</div>
+}
+
     </div>
-  );
-};
-
-
-
-
-
+  )
+}
