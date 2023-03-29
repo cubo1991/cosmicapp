@@ -96,6 +96,10 @@ partidasJugadas:{
 finalizada:{
   type: Boolean,
   default: false
+},
+campeon:{
+type: String,
+
 }
 
 }, {timestamps: true})

@@ -139,9 +139,12 @@ router.post('/partida', async (req, res) => {
 
 router.put('/finCopa/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+ const {ganador} = req.body;
+ 
+
   try {
  await Copa.updateOne({_id: id}, {$set:{finalizada: true}})
+ await Copa.updateOne({_id: id}, {$set:{campeon: ganador}})
     res.status(200).json("TodoOk");
   } catch (error) {
     res.status(500).json("TodoMal");

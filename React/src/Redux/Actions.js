@@ -127,7 +127,7 @@ export const fetchJugadores = () => {
   }
 
   export const putPuntosJugadores = (data) =>{
-console.log(data)
+
    
     let datos = {'idCopa': data[0], 'jugadores': data[1]}
  
@@ -172,10 +172,12 @@ try{
     }
   }
   export const  finCopa = (data) => {
+let id= data.id
+
 console.log(data)
     return async function(dispatch){
       try {
-        await axios.put(`/finCopa/${data}`);
+        await axios.put(`/finCopa/${id}`, data);
         dispatch({
           type: COPA_FINALIZADA
         })

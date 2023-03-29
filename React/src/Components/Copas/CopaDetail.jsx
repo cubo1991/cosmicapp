@@ -99,7 +99,8 @@ export const CopaDetail = () => {
     })
     
     setOrdenados(jugadoresOrdenados)
-    dispatch(finCopa(id))
+   
+    dispatch(finCopa({"id":id,"ganador":ranking[0].nombre} ))
     navigate("/")
     
   }
@@ -121,22 +122,16 @@ let rankingJugadores = jugadoresMap.map((jugador) => {
 
 let total = numbers.reduce((a, b) => Number(a) + Number(b), 0);
 jugador.total = total
+
 return jugador
 
 
   
 });
-let ranking = rankingJugadores.sort(((a, b) => {
-  if (a < b) {
-    return 1; // a es menor que b
-  } else if (a> b) {
-    return -1; // a es mayor que b
-  } else {
-    return 0; // a y b son iguales
-  }
-}))
 
-console.log(ranking)
+let ranking = rankingJugadores.sort((a, b) => b.total - a.total);
+
+
   return (
     <div className={s.elemento}>
             <table>
@@ -166,14 +161,19 @@ console.log(ranking)
   </tbody>
 </table>
 {
-copa.finalizada === false
+copa.finalizada === false && copa.partidasJugadas === copa.cantidadPartidas
+
 
 ?
 <button onClick={ordenarJugadores}>Finalizar Copa</button>
 :
+copa.finalizada === true
+?
 <div>
-  <p>El campeón de esta copa es {ganador}</p>
+  <p>El campeón de esta copa es {ranking[0].nombre}</p>
 </div>
+:
+null
 }
 
     </div>

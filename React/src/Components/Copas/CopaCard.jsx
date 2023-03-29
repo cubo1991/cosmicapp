@@ -18,7 +18,18 @@ export const CopaCard = () => {
 
 <div className="card-body">
   <h5 className="card-title">{copa.nombre}</h5>
-  <p className="card-text">El primero de esta copa es {'Alguien, eventualmente'}</p>
+{
+  copa.campeon
+  ?
+  <p className="card-text">El campeón de esta copa es {copa.campeon}</p>
+   :
+   <p className="card-text">El Cosmos se está disputando todavía</p>
+  
+
+
+}
+  
+  
   <Link to={'/copas/' + copa._id}><p className="btn btn-primary">Entrá al detalle de la copa</p></Link>
 </div>
 </div>
