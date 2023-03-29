@@ -45,7 +45,7 @@ const schemaJugador = new Schema ({
         puntosPartida: {type:Number}
       }],
       puntos: [{
-         type:Number, required: true      
+         type:Number    
       }]
   }],
   campañaGanada: {type:Boolean, default:false}
@@ -91,6 +91,15 @@ cantidadPartidas:{
 partidasJugadas:{
   type: Number,
   default:0
+},
+
+finalizada:{
+  type: Boolean,
+  default: false
+},
+campeon:{
+type: String,
+
 }
 
 }, {timestamps: true})

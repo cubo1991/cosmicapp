@@ -8,7 +8,7 @@ export const ListaJugadores = () => {
 let jugadoresTodos = useSelector((state) => state.jugadores)
 let ranking = useSelector((state) => state.rankingJugadores)
 let dispatch = useDispatch()
-console.log(jugadoresTodos[0])
+
 
 
 React.useEffect(() => {  

@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 export const Lista = ({jugadores}) => {
-    console.log(jugadores)
+   
     const jugadorLista = jugadores.map((jugador, index) => { 
         return (<tr key={index}>
             <td>{index+1}</td>
-        <td>{jugador.nombre}</td>
+            <Link to={'/jugadores/' + jugador._id}><td>{jugador.nombre}</td></Link>
         <td>{jugador.puntosPartidas}</td>
       </tr>
         )
@@ -16,7 +17,7 @@ export const Lista = ({jugadores}) => {
           <thead>
             <tr>
             <th>Posición</th>
-              <th>Nombre</th>
+           <th>Nombre</th>
               <th>Puntos</th>
             </tr>
           </thead>

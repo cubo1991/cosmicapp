@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { postJugador } from "../../Redux/Actions";
+import { postJugador, fetchJugadores } from "../../Redux/Actions";
 
 export const FormularioJugador = () => {
 
@@ -36,14 +36,18 @@ export const FormularioJugador = () => {
   //   copasJugadas: [],
   //   campañaGanada: false,
   // });
+const [form, setForm] = useState(false);
+const onSubmit = (data) => {
 
-  const onSubmit = (data) => {
-   console.log(data)
-      dispatch(postJugador(data))
-    
-    reset();
-  };
+  dispatch(postJugador(data))
+    .then(() => dispatch(fetchJugadores()));
+  setForm(!form);
+  reset();
+};
+useEffect(() => {
 
+ dispatch(fetchJugadores())
+}, [dispatch]);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
       <div className="col-md-6">

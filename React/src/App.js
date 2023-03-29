@@ -1,4 +1,4 @@
-
+import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -10,6 +10,7 @@ import { Admin } from './Components/Admin/Admin';
 import { NavBar } from './Components/NavBar/NavBar';
 import { Copas } from './Components/Copas/Copas';
 import { CopaDetail } from './Components/Copas/CopaDetail';
+import { Jugador } from './Components/Jugador/Jugador';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Route path='/admin' element={<Admin/>}/>
       <Route path='/copas' element={<Copas/>}/>
       <Route path='/copas/:id' element={<CopaDetail/>}/>
+      <Route path='/jugadores/:id' element={<Jugador/>}/>
       </Routes>
       
       

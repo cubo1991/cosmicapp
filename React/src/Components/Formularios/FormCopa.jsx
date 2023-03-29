@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchJugadores, createCopa } from '../../Redux/Actions';
+import { fetchJugadores, createCopa,fetchCopas } from '../../Redux/Actions';
 import Select from "react-select";
 
 export const FormCopa = () => {
@@ -9,6 +9,7 @@ export const FormCopa = () => {
   const [jugadores, setJugadores] = useState('');
   const [errors, setErrors] = useState({});
   const [jugadoresSeleccionados, setJugadoresSeleccionados] = useState([]);
+  const [form, setForm] = useState(false);
 
   let dispatch = useDispatch();
   useEffect(() => {
@@ -19,11 +20,15 @@ export const FormCopa = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log({ nombre, cantidadPartidas, jugadores });
+   
     setNombre('');
     setCantidadPartidas('');
     setJugadores('');
     dispatch(createCopa({ nombre, cantidadPartidas, jugadores }))
+    .then(() => dispatch(fetchCopas()))
+    .then(()=> setJugadores(''));
+ 
+  
   };
 
   const handleNombreChange = (e) => {
@@ -36,19 +41,7 @@ export const FormCopa = () => {
     setErrors((prevState) => ({ ...prevState, cantidadPartidas: null }));
   };
 
-  // const handleJugadoresChange = (e) => {
-  //   const options = e.target.options;
-  //   const selectedIds = [];
-  //   for (let i = 0; i < options.length; i++) {
-  //     if (options[i].selected) {
-  //       selectedIds.push(options[i].value);
-  //     }
-  //   }
-  //   setJugadoresSeleccionados(selectedIds);
-  //   setJugadores(selectedIds); // actualizar el estado de jugadores también
-  //   setErrors((prevState) => ({ ...prevState, jugadores: null }));
-  // };
-    
+
 
   const handleBlur = (e) => {
     const { name, value } = e.target;
@@ -95,27 +88,7 @@ export const FormCopa = () => {
         )}
       </div>
 
-      <div className="form-group">
-      <label htmlFor="jugadores">Jugadores</label>
-     <Select
-  options={jugadoresState.map((jugador) => ({ value: jugador._id, label: jugador.nombre }))}
-  isMulti
-  name="jugadores"
-  value={jugadoresSeleccionados.map((jugadorId) => ({ value: jugadorId, label: jugadoresState.find((jugador) => jugador._id === jugadorId).nombre }))}
-  onChange={(options) => {
-    const selectedIds = options.map((option) => option.value);
-    setJugadoresSeleccionados(selectedIds);
-    setJugadores(selectedIds);
-    setErrors((prevState) => ({ ...prevState, jugadores: null }));
-  }}
-/>
-      {jugadores.length > 0 && (
-        <div>
-          Jugadores seleccionados:{" "}
-          {jugadores.map((jugador) => jugador.label).join(", ")}
-        </div>
-      )}
-    </div>
+   
 
   <button type="submit" className="btn btn-primary">
     Guardar

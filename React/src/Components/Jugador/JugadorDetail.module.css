@@ -1,0 +1,10 @@
+.contenedor {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 80px; /* La altura del componente NavBar */
+    padding: 20px;
+    box-sizing: border-box;
+    max-width: 100%; /* Ancho máximo del contenedor */
+    width: 100%; /* Ancho del 100% del contenedor */
+}
