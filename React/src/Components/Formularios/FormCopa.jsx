@@ -1,22 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchJugadores, createCopa,fetchCopas } from '../../Redux/Actions';
-import Select from "react-select";
+
 
 export const FormCopa = () => {
   const [nombre, setNombre] = useState('');
   const [cantidadPartidas, setCantidadPartidas] = useState('');
   const [jugadores, setJugadores] = useState('');
   const [errors, setErrors] = useState({});
-  const [jugadoresSeleccionados, setJugadoresSeleccionados] = useState([]);
-  const [form, setForm] = useState(false);
+
+
 
   let dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchJugadores());
   }, [dispatch]);
-  let jugadoresState = useSelector((state) => state.jugadores);
-;
+
 
   const onSubmit = (e) => {
     e.preventDefault();

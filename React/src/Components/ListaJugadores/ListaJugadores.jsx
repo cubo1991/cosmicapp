@@ -5,7 +5,7 @@ import { fetchJugadores, fetchRanking } from '../../Redux/Actions'
 import { Lista } from './Lista/Lista'
 
 export const ListaJugadores = () => {
-let jugadoresTodos = useSelector((state) => state.jugadores)
+
 let ranking = useSelector((state) => state.rankingJugadores)
 let dispatch = useDispatch()
 

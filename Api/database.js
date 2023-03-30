@@ -4,7 +4,7 @@ const {
 } = process.env;
 
 
-const URI =  `mongodb+srv://cubo1991:cubazo@cluster0.s3smhyw.mongodb.net/?retryWrites=true&w=majority `
+const URI =  `mongodb+srv://cubo1991:cubazo@cluster0.s3smhyw.mongodb.net/?retryWrites=true&w=majority ` || 'mongodb://127.0.0.1/cosmicapp'
 
 
 mongoose.set('strictQuery', false);

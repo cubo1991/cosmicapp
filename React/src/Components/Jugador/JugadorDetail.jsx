@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchJugadores, fetchCopas, putJugadores } from '../../Redux/Actions';
+import { fetchJugadores, fetchCopas } from '../../Redux/Actions';
 import s from './JugadorDetail.module.css'
 
 

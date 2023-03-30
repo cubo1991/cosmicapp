@@ -21,7 +21,7 @@ export const CopaDetail = () => {
 
   
     const [ordenados,setOrdenados] = useState([])
-    const [ganador,setGanador] =useState(null)
+    
     let copasState = useSelector((state) => state.copas);
     let jugadoresState = useSelector((state) => state.jugadores);
     let copa = copasState.find(copa => copa._id === id ) || []
@@ -99,8 +99,12 @@ export const CopaDetail = () => {
     })
     
     setOrdenados(jugadoresOrdenados)
+
    
     dispatch(finCopa({"id":id,"ganador":ranking[0].nombre} ))
+   dispatch(putRanking(ordenados))
+   console.log(ordenados)
+    
     navigate("/")
     
   }
