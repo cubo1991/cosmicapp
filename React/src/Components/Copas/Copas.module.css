@@ -8,3 +8,7 @@
     max-width: 100%; /* Ancho máximo del contenedor */
     width: 100%; /* Ancho del 100% del contenedor */
 }
+.card {
+    position: relative;
+    z-index: 1;
+  }

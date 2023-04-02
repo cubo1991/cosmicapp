@@ -12,11 +12,11 @@ export const CopaCard = () => {
   }, [dispatch]);
   let copasState = useSelector((state) => state.copas);
   let copas = copasState.map((copa) => {
-  return    <div>
+  return    <div key={copa._id}>
 
-  <div className="card" style={{"width": "18 rem"}}>
+  <div className="card" style={{"width": "18 rem", "zIndex": "9998"}}>
 
-<div className="card-body">
+<div className="card-body" >
   <h5 className="card-title">{copa.nombre}</h5>
 {
   copa.campeon
@@ -30,7 +30,8 @@ export const CopaCard = () => {
 }
   
   
-  <Link to={'/copas/' + copa._id}><p className="btn btn-primary">Entrá al detalle de la copa</p></Link>
+<Link to={'/copas/' + copa._id}><button className="btn btn-primary">Entrá al detalle de la copa</button></Link>
+
 </div>
 </div>
 
