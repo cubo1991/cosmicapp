@@ -149,10 +149,10 @@ try{
   }
 
   export const putRanking = (data) => {
-  
+  console.log(data)
     let nuevosDatos = [];
     for(let datos of data){
-      nuevosDatos.push({"Puntuación":datos[0], "ID":datos[1] })
+      nuevosDatos.push({"Puntuación":datos['total'], "ID":datos['_id'] })
     }
     let podio = nuevosDatos.slice(0,4)
     console.log(podio)

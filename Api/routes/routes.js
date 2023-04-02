@@ -140,6 +140,7 @@ router.post('/partida', async (req, res) => {
 router.put('/finCopa/:id', async (req, res) => {
   const { id } = req.params;
  const {ganador} = req.body;
+
  
 
   try {
@@ -152,7 +153,7 @@ router.put('/finCopa/:id', async (req, res) => {
 })
 router.put('/setPodio', async (req,res) => {
 
-
+console.log(req.body)
 try{
  await Jugador.updateMany({}, {
     $set: {
@@ -164,13 +165,15 @@ try{
     await Jugador.updateOne({_id: req.body[0].ID},{$set:{'podioCopa.primerPuesto': true},  $inc: {copas: 1}} );
     await Jugador.updateOne({_id: req.body[1].ID},{$set:{'podioCopa.segundoPuesto': true}} );
     await Jugador.updateOne({_id: req.body[2].ID},{$set:{'podioCopa.tercerPuesto': true}} );
+
+    res.status(200).json("TodoOk");
 } catch(err){
   console.error(err);
   res.status(500).json({ error: 'Error del servidor' });
 }
 
 
-  res.status(200).json("TodoOk");
+ 
 
 })
   router.put('/puntuacionJugador', async (req, res) => {
