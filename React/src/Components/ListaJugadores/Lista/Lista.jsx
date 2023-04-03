@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import s from './Lista.module.css'
 
 export const Lista = ({ jugadores }) => {
 
@@ -17,7 +18,7 @@ export const Lista = ({ jugadores }) => {
   })
 
   return (
-    <table>
+    <table className={s.table}>
       <thead>
         <tr>
           <th>Posición</th>

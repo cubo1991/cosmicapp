@@ -5,18 +5,17 @@ import { fetchJugadores, fetchRanking } from '../../Redux/Actions'
 import { Lista } from './Lista/Lista'
 
 export const ListaJugadores = () => {
+  let ranking = useSelector((state) => state.rankingJugadores)
+  let dispatch = useDispatch()
 
-let ranking = useSelector((state) => state.rankingJugadores)
-let dispatch = useDispatch()
+  React.useEffect(() => {  
+    dispatch(fetchJugadores())
+    dispatch(fetchRanking())
+  }, [ dispatch])
 
-
-
-React.useEffect(() => {  
-  dispatch(fetchJugadores())
-  dispatch(fetchRanking())
-
-}, [ dispatch])
   return (
-    <div className={s.prueba}><Lista jugadores={ranking}/></div>
+    <div className={s.container}>
+      <div className={s.prueba}><Lista jugadores={ranking}/></div>
+    </div>
   )
 }

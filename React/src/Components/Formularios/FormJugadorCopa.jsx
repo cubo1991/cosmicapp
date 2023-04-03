@@ -11,19 +11,22 @@ export const FormJugadorCopa = () => {
     }, [dispatch]);
     let jugadoresState = useSelector((state) => state.jugadores);
     let copasState = useSelector((state) => state.copas);
+  
 const [copaData, setCopaData] = useState({
     copaId: '',
     jugadoresId: ''
   });
+  const addAllPlayers = () => {
+    let idJugadores = jugadoresState.map((e) => e._id);
+    setCopaData((copa) => ({ ...copa, jugadoresId: idJugadores }));
+  }
 
-
-let optionsCopa = copasState.map((e => {
-  return {
-    value: e._id,
-    label: e.nombre
-  } 
-
-}) )
+  let optionsCopa = copasState.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((e => {
+    return {
+      value: e._id,
+      label: e.nombre
+    } 
+  }) );
 
 let optionsJugador = jugadoresState.map((e => {
   return {
@@ -76,6 +79,9 @@ return (
             setCopaData((copa) => ({ ...copa, jugadoresId: idJugadores }));
           }}
         />
+            <button type="button" onClick={addAllPlayers} className="btn btn-secondary">
+          Agregar todos los jugadores
+        </button>
       </div>
       <button type="submit" onClick={onSubmit} className="btn btn-primary">
         Enviar

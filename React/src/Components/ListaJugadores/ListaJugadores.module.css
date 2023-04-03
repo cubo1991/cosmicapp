@@ -1,6 +1,16 @@
+.container {
+  max-width: 100%;
+  padding: 0 15px;
+}
+
 .prueba {
-    background-color: red;
-    height: fit-content;
-    max-width: 500px;
+  height: fit-content;
+  max-width: 500px;
   width: 33%;
+}
+
+@media (max-width: 767px) {
+  .prueba {
+    width: 100%;
+  }
 }

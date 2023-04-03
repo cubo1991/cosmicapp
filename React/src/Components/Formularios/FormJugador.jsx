@@ -221,6 +221,17 @@ useEffect(() => {
           rows="6"
         />
       </div>
+      <div className="col-md-12">
+        <label htmlFor="cumpleaños" className="form-label">
+          Fecha de nacimiento
+        </label>
+        <input
+          {...register("cumpleaños")}
+          id="cumpleaños"
+          type="date"
+          className="form-control"
+        />
+      </div>
      
       <div className="col-12">
         <button type="submit" className="btn btn-primary">

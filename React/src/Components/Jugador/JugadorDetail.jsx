@@ -20,9 +20,9 @@ console.log(jugador[0])
   return (
     <div className={s.contenedor}>
       {jugador.length > 0 ? (
-       <div>
+       <div className="table-responsive">
            <h2>{jugador[0].nombre}</h2>
-        <table>
+        <table className="table">
         <tr>
     <th>Jugadas</th>
     <th>Victorias</th>

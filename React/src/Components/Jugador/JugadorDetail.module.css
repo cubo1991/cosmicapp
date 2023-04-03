@@ -7,4 +7,31 @@
     box-sizing: border-box;
     max-width: 100%; /* Ancho máximo del contenedor */
     width: 100%; /* Ancho del 100% del contenedor */
-}
+  }
+  
+  h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    margin-bottom: 50px;
+    ; /* Agregado para hacer la tabla responsive */
+  }
+  
+  th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #eee;
+    white-space: nowrap; /* Agregado para evitar que los encabezados de las columnas se envuelvan */
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  

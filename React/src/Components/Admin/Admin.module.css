@@ -8,3 +8,97 @@
     max-width: 100%; /* Ancho máximo del contenedor */
     width: 100%; /* Ancho del 100% del contenedor */
 }
+
+* label {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #212529;
+  }
+  
+  * label::before {
+    content: "";
+    display: inline-block;
+    margin-right: 0.5rem;
+    vertical-align: 0.25em;
+    
+    background-repeat: no-repeat;
+    background-size: 1em;
+    background-position: center center;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+  }
+  
+  * .form-check-input[type="checkbox"]:checked + label::before {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+  
+  * .form-check-input[type="radio"]:checked + label::before {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+  
+  * .form-check-input:disabled + label {
+    color: #6c757d;
+  }
+  
+  * .form-check-input[readonly] + label {
+    color: #6c757d;
+  }
+  
+  * .form-check-inline {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.75rem;
+  }
+  
+  * .form-check-inline + .form-check-inline {
+    margin-left: 0.75rem;
+  }
+  
+  * .form-switch input[type="checkbox"]:checked + label::before {
+    background-color: #0d6efd;
+  }
+  
+  * .form-switch input[type="checkbox"]:checked + label::after {
+    transform: translateX(0.5rem);
+  }
+  
+  * .form-range::-moz-range-track {
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    background-color: transparent;
+    border-color: transparent;
+  }
+  
+  * .form-range::-moz-range-thumb {
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 0;
+    border-radius: 1rem;
+    background-color: #0d6efd;
+    cursor: pointer;
+    -moz-appearance: none;
+    appearance: none;
+    margin-top: -0.6rem;
+  }
+  
+  * .form-range::-moz-focus-outer {
+    border: 0;
+  }
+  
+  * .form-range::-webkit-slider-thumb {
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 0;
+    border-radius: 1rem;
+    background-color: #0d6efd;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -0.6rem;
+  }
+  
+  

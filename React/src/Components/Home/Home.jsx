@@ -10,9 +10,9 @@ export const Home = () => {
     <div className={s.fondo}>
       
       <div className={s.elementos}>
-        <BoletinCosmico />
+        {/* <BoletinCosmico /> */}
         <ListaJugadores />
-        <Feeds />
+        {/* <Feeds /> */}
       </div>
     </div>
   );
