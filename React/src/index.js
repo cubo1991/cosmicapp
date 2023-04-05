@@ -1,4 +1,4 @@
-import React from 'react';
+Noimport React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 import store from './Redux/Store';
 // || 'http://localhost:3000/api'
-axios.defaults.baseURL=  'http://localhost:3000/api';
+axios.defaults.baseURL=  'https://cosmicapp-api.onrender.com/api';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
