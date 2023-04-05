@@ -11,6 +11,7 @@ import { NavBar } from './Components/NavBar/NavBar';
 import { Copas } from './Components/Copas/Copas';
 import { CopaDetail } from './Components/Copas/CopaDetail';
 import { Jugador } from './Components/Jugador/Jugador';
+import { Aliens } from './Components/Alien/Aliens';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path='/copas' element={<Copas/>}/>
       <Route path='/copas/:id' element={<CopaDetail/>}/>
       <Route path='/jugadores/:id' element={<Jugador/>}/>
+      <Route path='/aliens' element={<Aliens/>}/>
       </Routes>
       
       

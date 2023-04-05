@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { COPA_FINALIZADA, CREATE_COPA, DELETE_JUGADORES, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR, PUT_JUGADORES, PUT_PUNTOSJUGADORES, PUT_RANKING } from '../Constantes/constantes';
+import { COPA_FINALIZADA, CREATE_COPA, DELETE_JUGADORES, FETCH_ALIENS, FETCH_COPAS, FETCH_JUGADORES, FETCH_RANKING, POST_JUGADOR, PUT_JUGADORES, PUT_PUNTOSJUGADORES, PUT_RANKING } from '../Constantes/constantes';
 
 
 export const fetchJugadores = () => {
@@ -191,3 +191,21 @@ console.log(data)
     }
     
   }
+
+  export const fetchAliens = () => {
+    return async function (dispatch) {
+      try {
+        const aliens = await axios.get('/aliens/aliens');
+        dispatch({
+          type: FETCH_ALIENS,
+          payload: aliens.data
+        });
+      } catch (error) {
+        dispatch({
+          type: FETCH_ALIENS,
+          error: [error]
+        });
+        console.log(error);
+      }
+    };
+  };

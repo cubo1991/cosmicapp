@@ -43,7 +43,9 @@ export const CopaDetail = () => {
   const renderJugadores = jugadoresMap.map((jugador) => {
     const copaJugada = jugador.copasJugadas;
 
-    const renderPuntajesJugador = copaJugada.puntos.map((puntaje) => <td>{puntaje}</td>);
+    const renderPuntajesJugador = copaJugada.puntos.length === 0
+    ? celdas.map(() => <td>0</td>)
+    : copaJugada.puntos.map((puntaje) => <td>{puntaje}</td>);
     return (
       <tr>
         <td>

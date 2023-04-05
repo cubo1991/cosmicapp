@@ -41,7 +41,7 @@ export const NavBar = () => {
               <a className="nav-link" href="# " onClick={handleLinkClick}>Historial Cósmico</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="# " onClick={handleLinkClick}>Aliens</a>
+            <Link to="/aliens" className="nav-link" onClick={handleLinkClick}>Aliens</Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="# " onClick={handleLinkClick}>Boletín Cósmico</a>

@@ -104,9 +104,25 @@ type: String,
 
 }, {timestamps: true})
 
+const schemaAlien = new Schema ({
+nombre: {type: String},
+
+Poder: {type: String},
+
+Descripcion:{type:String},
+
+Dificultad:{type:String},
+
+Expansion:{type:String},
+
+Variante:{type:String}
+  
+})
+
 const Jugador = mongoose.model('jugadores', schemaJugador);
 const Copa = mongoose.model('copa', schemaCopa);
 const Admin = mongoose.model('admin',schemaAdmin);
 const Partida = mongoose.model('partida', schemaPartida)
+const Alien = mongoose.model('alien',schemaAlien)
 
-module.exports =  {Jugador, Copa, Admin, Partida}
+module.exports =  {Jugador, Copa, Admin, Partida, Alien}

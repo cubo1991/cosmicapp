@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {Jugador, Copa, Partida} = require('../models/models.js')
+const {Jugador, Copa, Partida, Alien} = require('../models/models.js')
 
 
 
@@ -16,6 +16,15 @@ router.get('/jugadores', async (req, res, next) => {
     next(err);
   }
 });
+
+router.get('/aliens/aliens', async (req, res) =>{
+  try {
+    const aliens = await Alien.find({});
+    res.json(aliens);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+})
 
 router.get('/ranking', async (req, res, next) => {
   try {
