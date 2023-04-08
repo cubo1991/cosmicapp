@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchJugadores, fetchCopas,putPuntosJugadores, putRanking } from '../../Redux/Actions';
 import Select from "react-select";
 import { useNavigate  } from "react-router-dom";
+import s from './Form.module.css'
 
 
 export const AgregarPuntajes = () => {
@@ -181,74 +182,55 @@ let ordenarJugadores = () => {
     return (
 
       
-    <div>
-
-
-          <div className="container mt-5">
-      <form>
-        <div className="form-group">
-          <label htmlFor="idCopa">Nombre de la copa:</label>
-          <Select
+      <div className={s.container}>
+  <div className="container mt-5">
+    <form>
+      <div className="form-group">
+        <label htmlFor="idCopa">Nombre de la copa:</label>
+        <Select
           id="idCopa"
           options={optionsCopa}
-          onChange={(options)=> {           
-            setCopaData((copa) => ({...copa,copaId: options.value}))
-          }}  
-          />
-        </div>
-       
-      </form>
-      {
-      copaEncontrada && (copaEncontrada.partidasJugadas < copaEncontrada.cantidadPartidas)
-      ?
+          onChange={(options) => {
+            setCopaData((copa) => ({ ...copa, copaId: options.value }));
+          }}
+        />
+      </div>
+    </form>
+    {copaEncontrada && copaEncontrada.partidasJugadas < copaEncontrada.cantidadPartidas ? (
       <form>
-      <table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Colonias internas</th>
-      <th>Colonias externas</th>
-      <th>Puntos de victoria</th>
-      <th>Victoria especial</th>
-      <th>Ataque solitario</th>
-      <th>Defensa solitaria</th>
-      <th>No jugó</th>
-    </tr>
-  </thead>
-  <tbody>
-    {jugadoresMap}
-  </tbody>
-</table>
-<button type="submit" onClick={handleSubmit}className="btn btn-primary">
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Colonias internas</th>
+                <th>Colonias externas</th>
+                <th>Puntos de victoria</th>
+                <th>Victoria especial</th>
+                <th>Ataque solitario</th>
+                <th>Defensa solitaria</th>
+                <th>No jugó</th>
+              </tr>
+            </thead>
+            <tbody>{jugadoresMap}</tbody>
+          </table>
+        </div>
+        <button type="submit" onClick={handleSubmit} className="btn btn-primary">
           Enviar
         </button>
-
-
-
-
-
-
-
       </form>
-      :
-      copaEncontrada && (copaEncontrada.partidasJugadas > 0) 
-      ?
-      copaEncontrada.finalizada === false  
-      ?
+    ) : copaEncontrada && copaEncontrada.partidasJugadas > 0 ? (
+      copaEncontrada.finalizada === false ? (
         <button onClick={ordenarJugadores}>Finalizar Copa</button>
-        :
+      ) : (
         <p>Copa Finalizada</p>
-        :
-        <p>Ingresar una copa valida</p>
-     
-     
+      )
+    ) : (
+      <p>Ingresar una copa valida</p>
+    )}
+  </div>
+</div>
 
-
-      }
-    </div>
     
-
-
-    </div>
   )
 }

@@ -13,26 +13,32 @@
   box-sizing: border-box;
   z-index: 99999;
   position: relative;
-}
-
-@media screen and (max-width: 768px) {
+  }
+  
+  @media screen and (max-width: 768px) {
   .navbar {
-    flex-direction: column;
-    height: auto;
-    overflow-y: hidden;
+  flex-direction: column;
+  height: auto;
+  overflow-y: hidden;
   }
-
+  
   .navbar-collapse {
-    width: 100%;
+  width: 100%;
   }
-
+  
   .navbar-nav {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 1rem;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
   }
-
+  
   .nav-item {
-    margin-top: 0.5rem;
+  margin-top: 0.5rem;
   }
-}
+  }
+  
+  @media screen and (max-width: 480px) {
+  .navbar {
+  width: 100%;
+  }
+  }
