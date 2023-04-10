@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const app = express();
 const path = require('path')
 const public = path.join(__dirname,'../Client/public')
+const functions = require("firebase-functions");
 
 const {mongoose} = require('./database.js')
 
@@ -49,3 +50,8 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
     console.error(err);
     res.status(status).send({message});
   });
+
+
+
+  //Firebase
+  exports.app = functions.https.onRequest(app)
