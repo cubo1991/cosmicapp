@@ -84,9 +84,9 @@ export const Admin = () => {
    
    
  
-<button type="button" className={'btn btn-danger'} data-bs-toggle="modal" data-bs-target="#exampleModal">
+{/* <button type="button" className={'btn btn-danger'} data-bs-toggle="modal" data-bs-target="#exampleModal">
 Eliminar todos los jugadores
-</button>
+</button> */}
 
 
 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -26,6 +26,7 @@ const schemaJugador = new Schema ({
         type: Number,
         
     }],
+    campañaGanada: {type:Boolean, default:false},
     podioCopa: {
       type: Object,
       default: {
@@ -47,8 +48,8 @@ const schemaJugador = new Schema ({
       puntos: [{
          type:Number    
       }]
-  }],
-  campañaGanada: {type:Boolean, default:false}
+  }]
+  
 })
 
   

@@ -28,15 +28,19 @@ router.get('/aliens/aliens', async (req, res) =>{
 
 router.get('/ranking', async (req, res, next) => {
   try {
-    const jugadores = await Jugador.find({}, "puntosPartidas nombre podioCopa copas campañas");
-
+    const jugadores = await Jugador.find({}, "puntosPartidas nombre podioCopa copas campañas campañaGanada");
+console.log(jugadores)
     const jugadoresMap = jugadores.map(jugador => {
       let puntosPartidas = (jugador.puntosPartidas.slice(0, 10).reduce((a, b) => a + b, 0)) + jugador.copas + jugador.campañas/2;
       
-    
+      console.log(jugador)
         if(jugador.podioCopa.primerPuesto === true) puntosPartidas += 10;
         else if(jugador.podioCopa.segundoPuesto === true) puntosPartidas += 7;
         else if(jugador.podioCopa.tercerPuesto === true) puntosPartidas += 5;
+        if (jugador.campañaGanada === true) {
+          puntosPartidas += 7;
+          console.log(`Se sumaron 7 puntos a ${jugador.nombre} por ganar una campaña.`);
+        }
       
 
       return {
@@ -342,6 +346,29 @@ router.put("/copa/id/agregarJugador", async (req, res) => {
   }
 });
 
+
+router.put('/putCampanas/campana', async (req, res) => {
+ 
+  try {
+    await Jugador.updateMany({}, {
+      $set: {
+        'campañaGanada': false
+      }
+    });
+
+    for (let i = 0; i < req.body.length; i++) {
+      const jugador = req.body[i];
+      await Jugador.updateOne({_id: jugador.value}, {$set: {campañaGanada: true}});
+      await Jugador.updateOne({_id: jugador.value}, {$inc: {campañas: 1}});
+      
+    }
+
+    res.status(200).json("TodoOk");
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: 'Error del servidor'});
+  }
+});
 
 router.delete('/jugadores', async (req, res) => {
   try {
