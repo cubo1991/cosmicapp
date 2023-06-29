@@ -35,3 +35,9 @@
     background-color: #f2f2f2;
   }
   
+  @media screen and (max-width: 360px) {
+    .contenedor{
+   background-color: black;
+   
+    }
+       }

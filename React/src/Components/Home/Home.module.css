@@ -1,17 +1,16 @@
-
-.fondo{
+.fondo {
     display: flex;
-    flex-direction:column;
-   
-}
-
-.elementos {
+  }
+  
+  .elementos {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 80px; /* La altura del componente NavBar */
+    align-items: center;
+    margin-top: 80px; 
     padding: 20px;
     box-sizing: border-box;
-    max-width: 100%; /* Ancho máximo del contenedor */
-    width: 100%; /* Ancho del 100% del contenedor */
-}
+    max-width: 100%;
+    width: 100%; 
+  }
+  

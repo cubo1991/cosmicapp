@@ -47,7 +47,7 @@ export const CopaDetail = () => {
     ? celdas.map(() => <td>0</td>)
     : copaJugada.puntos.map((puntaje) => <td>{puntaje}</td>);
     return (
-      <tr>
+      <tr key={jugador._id}>
         <td>
           <Link to={`/jugadores/${jugador._id}`}>{jugador.nombre}</Link>
         </td>
@@ -83,7 +83,9 @@ export const CopaDetail = () => {
   let ranking = rankingJugadores.sort((a, b) => b.total - a.total);
   
   return (
-    <div className={s.elemento}>
+    <div >
+      <div className={s.elemento} style={{fontSize:"small"}}>
+
       <table>
         <thead>
           <tr>
@@ -99,11 +101,12 @@ export const CopaDetail = () => {
       <table>
         <thead>
           <tr>
-            <th>Puntos</th>
+            <th >Puntos</th>
           </tr>
         </thead>
         <tbody>{renderPuntajes}</tbody>
       </table>
+      </div>
       {copa.finalizada === false && copa.partidasJugadas === copa.cantidadPartidas ? (
         <button onClick={ordenarJugadores}>Finalizar Copa</button>
       ) : copa.finalizada === true ? (
@@ -112,7 +115,9 @@ export const CopaDetail = () => {
           <Link to={'/jugadores/' + ranking[0]._id}>Perfil del ganador</Link>
         </div>
       ) : (
+        <div className={s.textoPartidas}>
         <p>Faltan partidas por jugarse</p>
+        </div>
       )}
     </div>
   );

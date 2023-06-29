@@ -4,13 +4,17 @@
 }
 
 .prueba {
-  height: fit-content;
-  max-width: 500px;
-  width: 33%;
+  width: 100%;
 }
 
 @media (max-width: 767px) {
   .prueba {
-    width: 100%;
+    width: 50%;
   }
+
+  .container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+  
 }

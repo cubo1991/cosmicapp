@@ -39,6 +39,9 @@
   
   @media screen and (max-width: 480px) {
   .navbar {
-  width: 100%;
+    flex-direction: column;
+    height: auto;
+    overflow-y: hidden;
+    width: 100%;
   }
   }

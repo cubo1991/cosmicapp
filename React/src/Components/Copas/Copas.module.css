@@ -1,14 +1,27 @@
 .elemento {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     margin-top: 80px; /* La altura del componente NavBar */
     padding: 20px;
     box-sizing: border-box;
     max-width: 100%; /* Ancho máximo del contenedor */
     width: 100%; /* Ancho del 100% del contenedor */
+    margin-left: 1.5rem;
+    margin-right: 2rem;
+    
+   
 }
 .card {
     position: relative;
     z-index: 1;
   }
+
+  @media screen and (max-width: 360px) {
+.textoPartidas {
+width: fit-content;
+text-align: center;
+}
+
+ }
+    
